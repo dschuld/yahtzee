@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Yahtzee Sheet</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+	<style type="text/css">
+	
+.tg {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+
+.tg td {
+	font-family: Arial, sans-serif;
+	font-size: 14px;
+	padding: 10px 5px;
+	border-style: solid;
+	border-width: 1px;
+	overflow: hidden;
+	word-break: normal;
+}
+
+.tg th {
+	font-family: Arial, sans-serif;
+	font-size: 14px;
+	font-weight: normal;
+	padding: 10px 5px;
+	border-style: solid;
+	border-width: 1px;
+	overflow: hidden;
+	word-break: normal;
+}
+
+.tg .tg-yw4l {
+	vertical-align: top;
+	height: 15px;
+	
+    padding-top: 4px;
+    padding-bottom: 4px;
+}
+
+.tg .tg-yw4l>div {
+	width: 100%;
+	height: 100%;
+	overflow: hidden;
+}
+
+.input {
+	onkeydown:
+		"if (event.keyCode == 13) { this.form.submit(); return false; }";
+}
+</style>
+
+
+	<form action="#" th:action="@{/match}" th:object="${match}"
+		method="post">
+
+		<table class="tg" style="table-layout: fixed; width: 164px">
+			<colgroup>
+				<col style="width: 109.2px" />
+				<col style="width: 59.2px" />
+				<col style="width: 59.2px" />
+			</colgroup>
+			<tr>
+				<td class="tg-yw4l">Name</td>
+				<td class="tg-yw4l"><input type="text"
+					th:field="*{firstPlayer.playerName}" size="3" /></td>
+				<td class="tg-yw4l"><input type="text"
+					th:field="*{secondPlayer.playerName}" size="3" /></td>
+			</tr>
+			<tr>
+				<td class="tg-yw4l">1</td>
+				<td class="tg-yw4l"><input type="text"
+					th:field="*{firstPlayer.ones}" size="3" /></td>
+				<td class="tg-yw4l"><input type="text"
+					th:field="*{secondPlayer.ones}" size="3" /></td>
+			</tr>
+			<tr>
+				<td class="tg-yw4l">2</td>
+				<td class="tg-yw4l"><input type="text"
+					th:field="*{firstPlayer.twos}" size="3" /></td>
+				<td class="tg-yw4l"><input type="text"
+					th:field="*{secondPlayer.twos}" size="3" /></td>
+			</tr>
+			<tr>
+				<td class="tg-yw4l">3</td>
+				<td class="tg-yw4l"><input type="text"
+					th:field="*{firstPlayer.threes}" size="3" /></td>
+				<td class="tg-yw4l"><input type="text"
+					th:field="*{secondPlayer.threes}" size="3" /></td>
+			</tr>
+			<tr>
+				<td class="tg-yw4l">4</td>
+				<td class="tg-yw4l"><input type="text"
+					th:field="*{firstPlayer.fours}" size="3" /></td>
+				<td class="tg-yw4l"><input type="text"
+					th:field="*{secondPlayer.fours}" size="3" /></td>
+			</tr>
+			<tr>
+				<td class="tg-yw4l">5</td>
+				<td class="tg-yw4l"><input type="text"
+					th:field="*{firstPlayer.fives}" size="3" /></td>
+				<td class="tg-yw4l"><input type="text"
+					th:field="*{secondPlayer.fives}" size="3" /></td>
+			</tr>
+			<tr>
+				<td class="tg-yw4l">6</td>
+				<td class="tg-yw4l"><input type="text"
+					th:field="*{firstPlayer.sixes}" size="3" /></td>
+				<td class="tg-yw4l"><input type="text"
+					th:field="*{secondPlayer.sixes}" size="3" /></td>
+			</tr>
+			<tr>
+				<td class="tg-yw4l" th:text="#{total}"></td>
+				<td class="tg-yw4l" th:text="*{firstPlayer.totalUpper}"></td>
+				<td class="tg-yw4l" th:text="*{secondPlayer.totalUpper}"></td>
+			</tr>
+			<tr>
+				<td class="tg-yw4l" th:text="#{bonus}"></td>
+				<td class="tg-yw4l" th:text="*{firstPlayer.bonus}"></td>
+				<td class="tg-yw4l" th:text="*{secondPlayer.bonus}"></td>
+			</tr>
+			<tr>
+				<td class="tg-yw4l" th:text="#{totalUpper}"></td>
+				<td class="tg-yw4l" th:text="*{firstPlayer.totalUpperInclBonus}"></td>
+				<td class="tg-yw4l" th:text="*{secondPlayer.totalUpperInclBonus}"></td>
+			</tr>
+			<tr>
+				<td class="tg-yw4l"></td>
+			</tr>
+			<tr>
+				<td class="tg-yw4l" th:text="#{3OfAKind}"></td>
+				<td class="tg-yw4l"><input type="text"
+					th:field="*{firstPlayer.threeOfAKind}" size="3" /></td>
+				<td class="tg-yw4l"><input type="text"
+					th:field="*{secondPlayer.threeOfAKind}" size="3" /></td>
+			</tr>
+			<tr>
+				<td class="tg-yw4l" th:text="#{4OfAKind}"></td>
+				<td class="tg-yw4l"><input type="text"
+					th:field="*{firstPlayer.fourOfAKind}" size="3" /></td>
+				<td class="tg-yw4l"><input type="text"
+					th:field="*{secondPlayer.fourOfAKind}" size="3" /></td>
+			</tr>
+			<tr>
+				<td class="tg-yw4l" th:text="#{fullHouse}"></td>
+				<td class="tg-yw4l"><input type="text"
+					th:field="*{firstPlayer.fullHouse}" size="3" /></td>
+				<td class="tg-yw4l"><input type="text"
+					th:field="*{secondPlayer.fullHouse}" size="3" /></td>
+			</tr>
+			<tr>
+				<td class="tg-yw4l" th:text="#{smallStraight}"></td>
+				<td class="tg-yw4l"><input type="text"
+					th:field="*{firstPlayer.smallStraight}" size="3" /></td>
+				<td class="tg-yw4l"><input type="text"
+					th:field="*{secondPlayer.smallStraight}" size="3" /></td>
+			</tr>
+			<tr>
+				<td class="tg-yw4l" th:text="#{largeStraight}"></td>
+				<td class="tg-yw4l"><input type="text"
+					th:field="*{firstPlayer.largeStraight}" size="3" /></td>
+				<td class="tg-yw4l"><input type="text"
+					th:field="*{secondPlayer.largeStraight}" size="3" /></td>
+			</tr>
+			<tr>
+				<td class="tg-yw4l" th:text="#{yahtzee}"></td>
+				<td class="tg-yw4l"><input type="text"
+					th:field="*{firstPlayer.yahtzee}" size="3" /></td>
+				<td class="tg-yw4l"><input type="text"
+					th:field="*{secondPlayer.yahtzee}" size="3" /></td>
+			</tr>
+			<tr>
+				<td class="tg-yw4l" th:text="#{chance}"></td>
+				<td class="tg-yw4l"><input type="text"
+					th:field="*{firstPlayer.chance}" size="3" /></td>
+				<td class="tg-yw4l"><input type="text"
+					th:field="*{secondPlayer.chance}" size="3" /></td>
+			</tr>
+			<tr>
+				<td class="tg-yw4l" th:text="#{totalLower}"></td>
+				<td class="tg-yw4l" th:text="*{firstPlayer.totalLower}"></td>
+				<td class="tg-yw4l" th:text="*{secondPlayer.totalLower}"></td>
+			</tr>
+			<tr>
+				<td class="tg-yw4l" th:text="#{totalUpper}"></td>
+				<td class="tg-yw4l" th:text="*{firstPlayer.totalUpperInclBonus}"></td>
+				<td class="tg-yw4l" th:text="*{secondPlayer.totalUpperInclBonus}"></td>
+			</tr>
+			<tr>
+				<td class="tg-yw4l" th:text="#{grandTotal}"></td>
+				<td class="tg-yw4l" th:text="*{firstPlayer.grandTotal}"></td>
+				<td class="tg-yw4l" th:text="*{secondPlayer.grandTotal}"></td>
+			</tr>
+		</table>
+		<p>
+			<input type="submit" value="Submit" />
+		</p>
+	</form>
+
+</body>
+</html>
