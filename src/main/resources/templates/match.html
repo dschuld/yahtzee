@@ -7,6 +7,25 @@
 <body>
 	<style type="text/css">
 	
+div.container {
+    width: 100%;
+    border: 1px solid gray;
+}
+
+div.left {
+    float: left;
+    max-width: 400px;
+    margin: 0;
+    padding: 1em;
+}
+
+div.right {
+    margin-left: 0px;
+    border-left: 1px solid gray;
+    padding: 1em;
+    overflow: hidden;
+}
+
 .tg {
 	border-collapse: collapse;
 	border-spacing: 0;
@@ -41,6 +60,18 @@
     padding-bottom: 4px;
 }
 
+.tg .tg-diceval {
+	vertical-align: top;
+	height: 15px;
+	
+    padding-top: 4px;
+    padding-bottom: 4px;
+}
+
+.tg .tg-diceval>input {
+	border: none;
+}
+
 .tg .tg-yw4l>div {
 	width: 100%;
 	height: 100%;
@@ -53,7 +84,7 @@
 }
 </style>
 
-
+<div class="left">
 	<form action="#" th:action="@{/match}" th:object="${match}"
 		method="post">
 
@@ -199,6 +230,13 @@
 			<input type="submit" value="Submit" />
 		</p>
 	</form>
+	
+	</div>
+	
+	
+	<div class="left">
+	<div th:replace="round :: round">...</div>
+	</div>
 
 </body>
 </html>
