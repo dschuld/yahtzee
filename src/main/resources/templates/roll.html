@@ -84,9 +84,9 @@
 				</tr>
 
 			</table>
-			<p th:text="'Remaining rolls: ' + ${roll.remainingRolls}" />
+			<p th:text="#{remainingRolls} +': ' + ${roll.remainingRolls}" />
 			<p>
-				<input type="submit" value="Roll" />
+				<input type="submit" th:value="#{roll}" />
 			</p>
 		</form>
 	</div>
