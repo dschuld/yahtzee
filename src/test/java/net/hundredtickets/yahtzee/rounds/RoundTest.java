@@ -3,8 +3,6 @@ package net.hundredtickets.yahtzee.rounds;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
-import java.util.Iterator;
-
 import org.junit.Test;
 
 public class RoundTest {
@@ -30,18 +28,16 @@ public class RoundTest {
 	@Test
 	public void rollTwiceWithSave() {
 		Round round = new Round();
-		DiceSet dice = round.roll();
-		Iterator<Integer> iterator = dice.iterator();
-		DiceSet saveInput = new DiceSet(iterator.next(), iterator.next(), iterator.next());
-		round.save(saveInput);
-		DiceSet savedDice = round.getSavedDice();
-		assertEquals("Saved dice and input not equal", saveInput, savedDice);
+		DiceSet before = round.roll();
+		boolean[] saved = { true, true, true, false, false };
+		round.save(saved);
 
-		dice = round.roll();
+		DiceSet after = round.roll();
 
-		// TODO assert dice contains saved dice
 		assertEquals("Incorrect number of rolls left", 1, round.getRemainingRolls());
-		assertEquals("Incorrect number of dice in roll", 5, dice.size());
+		assertEquals("Saved dice before and after second roll are not equal", before.getDice(0), after.getDice(0));
+		assertEquals("Saved dice before and after second roll are not equal", before.getDice(1), after.getDice(1));
+		assertEquals("Saved dice before and after second roll are not equal", before.getDice(2), after.getDice(2));
 
 	}
 
@@ -50,15 +46,6 @@ public class RoundTest {
 		DiceSet s1 = new DiceSet(1, 2, 3, 4);
 		DiceSet s2 = new DiceSet(6, 5, 4);
 		DiceSet.createFromDiceSet(s1, s2);
-	}
-
-	// TODO make proof for 6-set
-	@Test(expected = IllegalMoveException.class)
-	public void rollOnceAndFixIllegalDice() {
-		Round round = new Round();
-		round.roll();
-		round.save(new DiceSet(6, 6, 6, 6, 6));
-
 	}
 
 }

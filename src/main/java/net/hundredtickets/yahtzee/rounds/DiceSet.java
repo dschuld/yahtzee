@@ -29,20 +29,19 @@ public class DiceSet implements Iterable<Integer> {
 		this.dice = Arrays.asList(dice);
 	}
 
-	/**
-	 * Throws the dice, i.e. creates a set of size numDice with random values.
-	 * 
-	 * @param numDice
-	 *            Number of dice to throw
-	 */
-	public static DiceSet createRandom(int numDice) {
-
-		Integer[] dice = new Integer[numDice];
-		for (int i = 0; i < numDice; i++) {
-			dice[i] = random.nextInt(6) + 1;
+	public void setRandomValues(boolean[] savedDice) {
+		for (int i = 0; i < savedDice.length; i++) {
+			if (!savedDice[i]) {
+				this.dice.set(i, random.nextInt(6) + 1);
+			}
 		}
+	}
 
-		return new DiceSet(dice);
+	/**
+	 * Creates an empty dice set
+	 */
+	public static DiceSet createEmpty() {
+		return createFromDice(0, 0, 0, 0, 0);
 	}
 
 	/**
@@ -108,6 +107,15 @@ public class DiceSet implements Iterable<Integer> {
 	@Override
 	public Iterator<Integer> iterator() {
 		return dice.iterator();
+	}
+
+	public Integer getDice(int pos) {
+		return this.dice.get(pos);
+	}
+
+	@Override
+	public String toString() {
+		return this.dice.toString();
 	}
 
 }

@@ -25,7 +25,7 @@ public class YahtzeeWebTests {
 	private TestRestTemplate restTemplate;
 
 	@Autowired
-	private ScorecardController controller;
+	private MatchController controller;
 
 	@Test
 	public void contextLoads() {

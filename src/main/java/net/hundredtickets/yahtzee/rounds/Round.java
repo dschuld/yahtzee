@@ -1,5 +1,7 @@
 package net.hundredtickets.yahtzee.rounds;
 
+import java.util.Arrays;
+
 /**
  * A Round in the game consists of rolling five dice up to three times. After
  * each roll, any of the dice can be saved and the other dice re-rolled.
@@ -25,8 +27,8 @@ package net.hundredtickets.yahtzee.rounds;
 public class Round {
 
 	private int remainingRolls = 3;
-	private DiceSet savedDice = new DiceSet();
-	private DiceSet currentRolledDice;
+	private boolean[] savedDice = new boolean[5];
+	private DiceSet currentRolledDice = DiceSet.createEmpty();
 
 	/**
 	 * Returns how many rolls are left in this round. The dice can be rolled up
@@ -49,8 +51,9 @@ public class Round {
 
 		remainingRolls--;
 
-		this.currentRolledDice = DiceSet.createRandom(5 - savedDice.size());
-		return DiceSet.createFromDiceSet(currentRolledDice, savedDice);
+		currentRolledDice.setRandomValues(savedDice);
+		System.out.println("New dice: " + currentRolledDice);
+		return currentRolledDice;
 	}
 
 	/**
@@ -59,16 +62,19 @@ public class Round {
 	 * 
 	 * @param diceSet
 	 */
-	public void save(DiceSet diceSet) {
-		if (!currentRolledDice.contains(diceSet)) {
-			throw new IllegalMoveException("Dice are not contained in last roll");
-		}
+	public void save(boolean[] savedDice) {
 
-		this.savedDice = diceSet;
+		System.out.println("Current dice:" + currentRolledDice + ",savedDice: " + Arrays.toString(savedDice));
+
+		this.savedDice = savedDice;
 
 	}
 
-	public DiceSet getSavedDice() {
+	public DiceSet getCurrentRolledDice() {
+		return this.currentRolledDice;
+	}
+
+	public boolean[] getSavedDice() {
 		return this.savedDice;
 	}
 
