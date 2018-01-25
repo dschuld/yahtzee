@@ -12,29 +12,33 @@ import javax.validation.Valid;
 public class Match {
 
 	@Valid
-	private Scorecard firstPlayer;
+	private Scorecard activePlayer;
 	@Valid
-	private Scorecard secondPlayer;
+	private Scorecard passivePlayer;
 
-	public Match(String firstPlayerName, String secondPlayerName) {
-		firstPlayer = new Scorecard(firstPlayerName);
-		secondPlayer = new Scorecard(secondPlayerName);
+	public Match(String activePlayerName, String passivePlayerName) {
+		activePlayer = new Scorecard(activePlayerName);
+		passivePlayer = new Scorecard(passivePlayerName);
 	}
 
-	public Scorecard getFirstPlayer() {
-		return firstPlayer;
+	public Scorecard getActivePlayer() {
+		return activePlayer;
 	}
 
-	public void setFirstPlayer(Scorecard firstPlayer) {
-		this.firstPlayer = firstPlayer;
+	public void setActivePlayer(Scorecard activePlayer) {
+		this.activePlayer = activePlayer;
 	}
 
-	public Scorecard getSecondPlayer() {
-		return secondPlayer;
+	public Scorecard getPassivePlayer() {
+		return passivePlayer;
 	}
 
-	public void setSecondPlayer(Scorecard secondPlayer) {
-		this.secondPlayer = secondPlayer;
+	public void setPassivePlayer(Scorecard passivePlayer) {
+		this.passivePlayer = passivePlayer;
 	}
 
+	public void reset() {
+		activePlayer = new Scorecard(activePlayer.getPlayerName());
+		passivePlayer = new Scorecard(passivePlayer.getPlayerName());
+	}
 }

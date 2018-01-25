@@ -50,12 +50,12 @@ public class YahtzeeWebTests {
 		MultiValueMap<String, String> map = new LinkedMultiValueMap<String, String>();
 		map.add("RequestId", "asd");
 		map.add("secondPlayer.name", "David");
-		map.add("firstPlayer.ones", "3");
-		map.add("firstPlayer.twos", "6");
-		map.add("firstPlayer.threes", "9");
-		map.add("firstPlayer.fours", "12");
-		map.add("firstPlayer.fives", "15");
-		map.add("firstPlayer.sixes", "18");
+		map.add("activePlayer.ones", "3");
+		map.add("activePlayer.twos", "6");
+		map.add("activePlayer.threes", "9");
+		map.add("activePlayer.fours", "12");
+		map.add("activePlayer.fives", "15");
+		map.add("activePlayer.sixes", "18");
 		map.add("Accept-Language", "en-EN");
 
 		// Response must have the value 98 as a result for the upper part (sum

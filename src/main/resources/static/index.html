@@ -1,5 +1,5 @@
 <!DOCTYPE HTML>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Getting Started: Serving Web Content</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
@@ -7,5 +7,12 @@
 <body>
     <p>Get your greeting <a href="/greeting">here</a></p>
     <p><a href="/match">Kniffel</a></p>
+
+    <form action="/match"
+          method="get">
+        <input type="radio" name="player" value="david" checked>David<br>
+        <input type="radio" name="player" value="melanie">Melanie<br>
+        <input type="submit"  th:value="#{submit}" >
+    </form>
 </body>
 </html>

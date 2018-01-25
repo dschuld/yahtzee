@@ -2,6 +2,7 @@ package net.hundredtickets.yahtzee;
 
 import javax.validation.Valid;
 
+import net.hundredtickets.yahtzee.model.Scorecard;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -52,9 +53,10 @@ public class MatchController {
 	@PostMapping("/match")
 	public String putScorecardPoints(@Valid @ModelAttribute("match") Match match, @ModelAttribute("roll") Roll roll,
 			BindingResult bindingResult) {
-		for (ObjectError error : bindingResult.getAllErrors()) {
-			System.out.println(error);
-		}
+
+		Scorecard activePlayer = match.getActivePlayer();
+		match.setActivePlayer(match.getPassivePlayer());
+		match.setPassivePlayer(activePlayer);
 
 		roll.setRemainingRolls(3);
 		roundService.newRound();
@@ -76,6 +78,19 @@ public class MatchController {
 
 		return "match";
 	}
+
+
+
+    @GetMapping("/reset")
+    public String resetMatch(@Valid @ModelAttribute("match") Match match, @ModelAttribute("roll") Roll round,
+                             BindingResult bindingResult) {
+
+        match.reset();
+        roundService.newRound();
+//        putScorecardPoints(match, new Roll(), null);
+//        getScorecard(match, new Roll(), null);
+        return "match";
+    }
 
 	private void setDiceValues(Roll roll) {
 

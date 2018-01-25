@@ -67,7 +67,7 @@ public class YahtzeeWebTestsNoServer {
 
 		// Test the validation by setting a field to an invalid value and
 		// testing for a 4xx client error
-		this.mockMvc.perform(post("/match").param("firstPlayer.fours", "30")).andDo(print())
+		this.mockMvc.perform(post("/match").param("activePlayer.fours", "30")).andDo(print())
 				.andExpect(status().is4xxClientError());
 	}
 

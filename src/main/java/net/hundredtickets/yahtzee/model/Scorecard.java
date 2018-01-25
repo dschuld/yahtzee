@@ -47,9 +47,9 @@ public class Scorecard {
 	@Min(0)
 	@Max(30)
 	private Integer fourOfAKind;
-	private Boolean fullHouse;
-	private Boolean smallStraight;
-	private Boolean largeStraight;
+	private Integer fullHouse;
+	private Integer smallStraight;
+	private Integer largeStraight;
 	@Min(0)
 	private Integer yahtzee;
 	@Min(0)
@@ -153,27 +153,27 @@ public class Scorecard {
 	}
 
 	public Integer getFullHouse() {
-		return fullHouse == null ? null : !fullHouse ? 0 : 25;
+		return fullHouse;
 	}
 
 	public void setFullHouse(Integer fullHouse) {
-		this.fullHouse = fullHouse != null && fullHouse == 25;
+		this.fullHouse = fullHouse;
 	}
 
 	public Integer getSmallStraight() {
-		return smallStraight == null ? null : !smallStraight ? 0 : 30;
+		return smallStraight;
 	}
 
 	public void setSmallStraight(Integer smallStraight) {
-		this.smallStraight = smallStraight != null && smallStraight == 30;
+		this.smallStraight = smallStraight;
 	}
 
 	public Integer getLargeStraight() {
-		return largeStraight == null ? null : !largeStraight ? 0 : 40;
+		return largeStraight;
 	}
 
 	public void setLargeStraight(Integer largeStraight) {
-		this.largeStraight = largeStraight != null && largeStraight == 40;
+		this.largeStraight = largeStraight;
 	}
 
 	public Integer getYahtzee() {
