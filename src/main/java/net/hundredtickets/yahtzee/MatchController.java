@@ -7,9 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 import net.hundredtickets.yahtzee.model.Match;
 import net.hundredtickets.yahtzee.model.Roll;
@@ -17,90 +15,147 @@ import net.hundredtickets.yahtzee.rounds.NoRollsLeftException;
 import net.hundredtickets.yahtzee.service.RoundService;
 import net.hundredtickets.yahtzee.service.ScorecardService;
 
+import java.util.HashMap;
+import java.util.Map;
+
 @Controller
 public class MatchController {
 
-	@Autowired
-	private RoundService roundService;
+    @Autowired
+    private RoundService roundService;
 
-	@Autowired
-	private ScorecardService scorecardService;
+    @Autowired
+    private ScorecardService scorecardService;
 
-	private Match match = new Match("David", "Melanie");
+    private Match match;
 
-	public MatchController() {
-		//
-	}
+    private Map<String, Scorecard> scorecards = new HashMap<>();
 
-	@ModelAttribute("roll")
-	public Roll getRoll() {
-		return new Roll();
-	}
+    private Scorecard davidCard;
+    private Scorecard melCard;
 
-	@ModelAttribute("match")
-	public Match getMatch() {
-		return match;
-	}
+    public MatchController() {
+        match = new Match("David", "Melanie");
+        scorecards.put("David", match.getActivePlayer());
+        scorecards.put("Melanie", match.getPassivePlayer());
+        davidCard = new Scorecard(match.getActivePlayer());
+        melCard = new Scorecard(match.getPassivePlayer());
+    }
 
-	@GetMapping("/match")
-	public String getScorecard(@Valid @ModelAttribute("match") Match match, @ModelAttribute("roll") Roll round,
-			BindingResult bindingResult) {
+    private String dirty = null;
 
-		roundService.fetchCurrentValues(round);
-		return "match";
-	}
+    @ModelAttribute("roll")
+    public Roll getRoll() {
+        return new Roll();
+    }
 
-	@PostMapping("/match")
-	public String putScorecardPoints(@Valid @ModelAttribute("match") Match match, @ModelAttribute("roll") Roll roll,
-			BindingResult bindingResult) {
+    @ModelAttribute("match")
+    public Match getMatch() {
+        return match;
+    }
 
-		Scorecard activePlayer = match.getActivePlayer();
-		match.setActivePlayer(match.getPassivePlayer());
-		match.setPassivePlayer(activePlayer);
+    @GetMapping("/match")
+    public String getScorecard(String player, @Valid @ModelAttribute("match") Match match, @ModelAttribute("roll") Roll round,
+                               BindingResult bindingResult) {
+        if (player.toLowerCase().equals("david")) {
+            match.setActivePlayer(new Scorecard(this.davidCard));
+            match.setPassivePlayer(new Scorecard(this.melCard));
+        } else {
+            match.setActivePlayer(new Scorecard(this.melCard));
+            match.setPassivePlayer(new Scorecard(this.davidCard));
+        }
+        roundService.fetchCurrentValues(round);
+        return "match";
+    }
 
-		roll.setRemainingRolls(3);
-		roundService.newRound();
-		return "match";
-	}
+    @PostMapping("/match")
+    public String putScorecardPoints(String player, @Valid @ModelAttribute("match") Match match, @ModelAttribute("roll") Roll roll,
+                                     BindingResult bindingResult) {
+        setMatchPlayers(player, match);
+        if (player.toLowerCase().equals("david")) {
+            this.davidCard = new Scorecard(match.getActivePlayer());
+        } else {
+            this.melCard = new Scorecard(match.getActivePlayer());
+        }
+        if (player.toLowerCase().equals("david")) {
+            match.setActivePlayer(new Scorecard(this.davidCard));
+            match.setPassivePlayer(new Scorecard(this.melCard));
+        } else {
+            match.setActivePlayer(new Scorecard(this.melCard));
+            match.setPassivePlayer(new Scorecard(this.davidCard));
+        }
+//        this.scorecards.put(player, match.getActivePlayer());
+//
+//        for(Scorecard card: scorecards.values()) {
+//            String playerName = card.getPlayerName();
+//            if (!card.getPlayerName().toLowerCase().equals(player.toLowerCase())) {
+//                match.setPassivePlayer(card);
+//            }
+//        }
 
-	@GetMapping("/roll")
-	public String getRoll(@ModelAttribute("roll") Roll roll, BindingResult bindingResult) {
+        roll.setRemainingRolls(3);
+        roundService.newRound();
+        dirty = player;
+        return "match";
+    }
 
-		roundService.fetchCurrentValues(roll);
+    private void setMatchPlayers(String playerName, @Valid @ModelAttribute("match") Match match) {
+        if (!match.getActivePlayer().getPlayerName().toLowerCase().equals(playerName.toLowerCase())) {
+            Scorecard activePlayer = match.getActivePlayer();
+            match.setActivePlayer(match.getPassivePlayer());
+            match.setPassivePlayer(activePlayer);
+        }
+//        if (playerName.toLowerCase().equals("david")) {
+//            match.setActivePlayer(davidCard);
+//            match.setPassivePlayer(melCard);
+//        } else {
+//            match.setActivePlayer(melCard);
+//            match.setPassivePlayer(davidCard);
+//        }
+    }
 
-		return "match";
-	}
+    @GetMapping("/roll")
+    public String getRoll(@ModelAttribute("roll") Roll roll, BindingResult bindingResult) {
 
-	@PostMapping("/roll")
-	public String postRoll(@ModelAttribute("roll") Roll roll, BindingResult bindingResult) {
+        roundService.fetchCurrentValues(roll);
 
-		setDiceValues(roll);
+        return "match";
+    }
 
-		return "match";
-	}
+    @GetMapping("/value/{player}/{field}")
+    @ResponseBody
+    public Integer getPlayerValue(@PathVariable String player, @PathVariable String field) {
+        return match.getScorecard(player).get(field);
+    }
 
 
+    @PostMapping("/roll")
+    public String postRoll(@ModelAttribute("roll") Roll roll, BindingResult bindingResult) {
 
-    @GetMapping("/reset")
+        setDiceValues(roll);
+
+        return "match";
+    }
+
+
+    @PostMapping("/reset")
     public String resetMatch(@Valid @ModelAttribute("match") Match match, @ModelAttribute("roll") Roll round,
                              BindingResult bindingResult) {
 
         match.reset();
         roundService.newRound();
-//        putScorecardPoints(match, new Roll(), null);
-//        getScorecard(match, new Roll(), null);
         return "match";
     }
 
-	private void setDiceValues(Roll roll) {
+    private void setDiceValues(Roll roll) {
 
-		try {
-			roundService.rollDice(roll);
-			roundService.fetchCurrentValues(roll);
-		} catch (NoRollsLeftException e) {
-			roll.setRemainingRolls(0);
-			return;
-		}
-	}
+        try {
+            roundService.rollDice(roll);
+            roundService.fetchCurrentValues(roll);
+        } catch (NoRollsLeftException e) {
+            roll.setRemainingRolls(0);
+            return;
+        }
+    }
 
 }

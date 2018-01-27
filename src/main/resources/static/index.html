@@ -5,13 +5,10 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 </head>
 <body>
-    <p>Get your greeting <a href="/greeting">here</a></p>
-    <p><a href="/match">Kniffel</a></p>
-
     <form action="/match"
           method="get">
-        <input type="radio" name="player" value="david" checked>David<br>
-        <input type="radio" name="player" value="melanie">Melanie<br>
+        <input type="radio" name="player" value="David" checked>David<br>
+        <input type="radio" name="player" value="Melanie">Melanie<br>
         <input type="submit"  th:value="#{submit}" >
     </form>
 </body>

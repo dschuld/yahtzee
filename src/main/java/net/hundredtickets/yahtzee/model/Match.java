@@ -16,6 +16,8 @@ public class Match {
 	@Valid
 	private Scorecard passivePlayer;
 
+	public static final Fields[] fieldnames = Fields.values();
+
 	public Match(String activePlayerName, String passivePlayerName) {
 		activePlayer = new Scorecard(activePlayerName);
 		passivePlayer = new Scorecard(passivePlayerName);
@@ -41,4 +43,12 @@ public class Match {
 		activePlayer = new Scorecard(activePlayer.getPlayerName());
 		passivePlayer = new Scorecard(passivePlayer.getPlayerName());
 	}
+
+	public Scorecard getScorecard(String player) {
+	    if (activePlayer.getPlayerName().equals(player)) {
+	        return activePlayer;
+        } else {
+	        return passivePlayer;
+        }
+    }
 }

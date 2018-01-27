@@ -23,6 +23,8 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import net.hundredtickets.yahtzee.model.Roll;
 import net.hundredtickets.yahtzee.service.RoundService;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -58,7 +60,22 @@ public class YahtzeeWebTestsNoServer {
 
 	@Test
 	public void getContainsHardcodedValues() throws Exception {
-		this.mockMvc.perform(get("/match")).andDo(print()).andExpect(status().isOk())
+		MultiValueMap<String, String> map = new LinkedMultiValueMap<String, String>();
+
+		map = new LinkedMultiValueMap<String, String>();
+		map.add("Accept-Language", "de-DE,de");
+		map.add("RequestId", "asd");
+
+		map.add("player", "David");
+		map.add("passivePlayer.name", "David");
+		map.add("activePlayer.name", "Melanie");
+		map.add("activePlayer.ones", "3");
+		map.add("activePlayer.twos", "6");
+		map.add("activePlayer.threes", "9");
+		map.add("activePlayer.fours", "12");
+		map.add("activePlayer.fives", "15");
+		map.add("activePlayer.sixes", "18");
+		this.mockMvc.perform(get("/match").params(map)).andDo(print()).andExpect(status().isOk())
 				.andExpect(content().string(containsString("Large Straight")));
 	}
 

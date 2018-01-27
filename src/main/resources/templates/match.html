@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-<title>Yahtzee Sheet</title>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>Yahtzee Sheet</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 </head>
 <body>
-	<style type="text/css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+<!--<script type="text/javascript" th:src="@{/js/lib/scripts.js}" />-->
+<style type="text/css">
 	
 div.container {
     width: 100%;
@@ -82,152 +84,203 @@ div.right {
 	onkeydown:
 		"if (event.keyCode == 13) { this.form.submit(); return false; }";
 }
+
+
+
 </style>
 
 <div class="left">
-	<form action="#" th:action="@{/match}" th:object="${match}"
-		method="post">
-
-		<table class="tg" style="table-layout: fixed; width: 164px">
-			<colgroup>
-				<col style="width: 109.2px" />
-				<col style="width: 59.2px" />
-				<col style="width: 59.2px" />
-			</colgroup>
-			<tr>
-				<td class="tg-yw4l">Name</td>
-				<td class="tg-yw4l"><input type="text"
-					th:field="*{activePlayer.playerName}" size="3" /></td>
-				<td class="tg-yw4l"><input type="text"
-					th:field="*{passivePlayer.playerName}" size="3" /></td>
-			</tr>
-			<tr>
-				<td class="tg-yw4l">1</td>
-				<td class="tg-yw4l"><input type="text"
-					th:field="*{activePlayer.ones}" size="3" /></td>
-				<td class="tg-yw4l" th:text="*{passivePlayer.ones}"></td>
-			</tr>
-			<tr>
-				<td class="tg-yw4l">2</td>
-				<td class="tg-yw4l"><input type="text"
-					th:field="*{activePlayer.twos}" size="3" /></td>
-				<td class="tg-yw4l" th:text="*{passivePlayer.twos}"></td>
-			</tr>
-			<tr>
-				<td class="tg-yw4l">3</td>
-				<td class="tg-yw4l"><input type="text"
-					th:field="*{activePlayer.threes}" size="3" /></td>
-				<td class="tg-yw4l" th:text="*{passivePlayer.threes}"></td>
-			</tr>
-			<tr>
-				<td class="tg-yw4l">4</td>
-				<td class="tg-yw4l"><input type="text"
-					th:field="*{activePlayer.fours}" size="3" /></td>
-				<td class="tg-yw4l" th:text="*{passivePlayer.fours}"></td>
-			</tr>
-			<tr>
-				<td class="tg-yw4l">5</td>
-				<td class="tg-yw4l"><input type="text"
-					th:field="*{activePlayer.fives}" size="3" /></td>
-				<td class="tg-yw4l" th:text="*{passivePlayer.fives}"></td>
-			</tr>
-			<tr>
-				<td class="tg-yw4l">6</td>
-				<td class="tg-yw4l"><input type="text"
-					th:field="*{activePlayer.sixes}" size="3" /></td>
-				<td class="tg-yw4l" th:text="*{passivePlayer.sixes}"></td>
-			</tr>
-			<tr>
-				<td class="tg-yw4l" th:text="#{total}"></td>
-				<td class="tg-yw4l" th:text="*{activePlayer.totalUpper}"></td>
-				<td class="tg-yw4l" th:text="*{passivePlayer.totalUpper}"></td>
-			</tr>
-			<tr>
-				<td class="tg-yw4l" th:text="#{bonus}"></td>
-				<td class="tg-yw4l" th:text="*{activePlayer.bonus}"></td>
-				<td class="tg-yw4l" th:text="*{passivePlayer.bonus}"></td>
-			</tr>
-			<tr>
-				<td class="tg-yw4l" th:text="#{totalUpper}"></td>
-				<td class="tg-yw4l" th:text="*{activePlayer.totalUpperInclBonus}"></td>
-				<td class="tg-yw4l" th:text="*{passivePlayer.totalUpperInclBonus}"></td>
-			</tr>
-			<tr>
-				<td class="tg-yw4l"></td>
-			</tr>
-			<tr>
-				<td class="tg-yw4l" th:text="#{3OfAKind}"></td>
-				<td class="tg-yw4l"><input type="text"
-					th:field="*{activePlayer.threeOfAKind}" size="3" /></td>
-				<td class="tg-yw4l" th:text="*{passivePlayer.threeOfAKind}"></td>
-			</tr>
-			<tr>
-				<td class="tg-yw4l" th:text="#{4OfAKind}"></td>
-				<td class="tg-yw4l"><input type="text"
-					th:field="*{activePlayer.fourOfAKind}" size="3" /></td>
-				<td class="tg-yw4l" th:text="*{passivePlayer.fourOfAKind}"></td>
-			</tr>
-			<tr>
-				<td class="tg-yw4l" th:text="#{fullHouse}"></td>
-				<td class="tg-yw4l"><input type="text"
-					th:field="*{activePlayer.fullHouse}" size="3" /></td>
-				<td class="tg-yw4l" th:text="*{passivePlayer.fullHouse}"></td>
-			</tr>
-			<tr>
-				<td class="tg-yw4l" th:text="#{smallStraight}"></td>
-				<td class="tg-yw4l"><input type="text"
-					th:field="*{activePlayer.smallStraight}" size="3" /></td>
-				<td class="tg-yw4l" th:text="*{passivePlayer.smallStraight}"></td>
-			</tr>
-			<tr>
-				<td class="tg-yw4l" th:text="#{largeStraight}"></td>
-				<td class="tg-yw4l"><input type="text"
-					th:field="*{activePlayer.largeStraight}" size="3" /></td>
-				<td class="tg-yw4l" th:text="*{passivePlayer.largeStraight}"></td>
-			</tr>
-			<tr>
-				<td class="tg-yw4l" th:text="#{yahtzee}"></td>
-				<td class="tg-yw4l"><input type="text"
-					th:field="*{activePlayer.yahtzee}" size="3" /></td>
-				<td class="tg-yw4l" th:text="*{passivePlayer.yahtzee}"></td>
-			</tr>
-			<tr>
-				<td class="tg-yw4l" th:text="#{chance}"></td>
-				<td class="tg-yw4l"><input type="text"
-					th:field="*{activePlayer.chance}" size="3" /></td>
-				<td class="tg-yw4l" th:text="*{passivePlayer.chance}"></td>
-			</tr>
-			<tr>
-				<td class="tg-yw4l" th:text="#{totalLower}"></td>
-				<td class="tg-yw4l" th:text="*{activePlayer.totalLower}"></td>
-				<td class="tg-yw4l" th:text="*{passivePlayer.totalLower}"></td>
-			</tr>
-			<tr>
-				<td class="tg-yw4l" th:text="#{totalUpper}"></td>
-				<td class="tg-yw4l" th:text="*{activePlayer.totalUpperInclBonus}"></td>
-				<td class="tg-yw4l" th:text="*{passivePlayer.totalUpperInclBonus}"></td>
-			</tr>
-			<tr>
-				<td class="tg-yw4l" th:text="#{grandTotal}"></td>
-				<td class="tg-yw4l" th:text="*{activePlayer.grandTotal}"></td>
-				<td class="tg-yw4l" th:text="*{passivePlayer.grandTotal}"></td>
-			</tr>
-		</table>
-		<p>
-			<input type="submit" th:value="#{submit}" />
-		</p>
-    </form>
-    <form action="/match"  method="get">
+    <form action="#" th:action="@{/match}" th:object="${match}"
+          method="get">
+        <input type="hidden" th:value="${match.activePlayer.playerName}" name="player"/>
         <input type="submit" value="Refresh"/>
-        <button type="submit" formaction="/reset">Reset</button>
     </form>
-	
-	</div>
-	
-	
-	<div class="left">
-	<div th:replace="roll :: roll">...</div>
-	</div>
+    <form action="#" th:action="@{/match(player=${match.activePlayer.playerName})}" th:object="${match}"
+          method="post">
+        <p>
+            <input type="submit" th:value="#{submit}"/>
+            <button type="submit" formaction="/reset">Reset</button>
+        </p>
+        <div id="board">
+            <table class="tg" style="table-layout: fixed; width: 164px">
+                <colgroup>
+                    <col style="width: 109.2px"/>
+                    <col style="width: 59.2px"/>
+                    <col style="width: 59.2px"/>
+                </colgroup>
 
+
+                <tr>
+                    <td class="tg-yw4l">Name</td>
+                    <td class="tg-yw4l"><input type="text"
+                                               th:field="*{activePlayer.playerName}" size="3"/></td>
+                    <td class="tg-yw4l"><input type="text"
+                                               th:field="*{passivePlayer.playerName}" size="3"/></td>
+                </tr>
+                <tr>
+                    <td class="tg-yw4l">1</td>
+                    <td class="tg-yw4l"><input type="text"
+                                               th:field="*{activePlayer.ones}" size="3"/></td>
+                    <td class="tg-yw4l update" th:text="*{passivePlayer.ones}" id="ones"></td>
+                </tr>
+                <tr>
+                    <td class="tg-yw4l">2</td>
+                    <td class="tg-yw4l"><input type="text"
+                                               th:field="*{activePlayer.twos}" size="3"/></td>
+                    <td class="tg-yw4l update" th:text="*{passivePlayer.twos}" id="twos"></td>
+                </tr>
+                <tr>
+                    <td class="tg-yw4l">3</td>
+                    <td class="tg-yw4l"><input type="text"
+                                               th:field="*{activePlayer.threes}" size="3"/></td>
+                    <td class="tg-yw4l update" th:text="*{passivePlayer.threes}" id="threes"></td>
+                </tr>
+                <tr>
+                    <td class="tg-yw4l">4</td>
+                    <td class="tg-yw4l"><input type="text"
+                                               th:field="*{activePlayer.fours}" size="3"/></td>
+                    <td class="tg-yw4l update" th:text="*{passivePlayer.fours}" id="fours"></td>
+                </tr>
+                <tr>
+                    <td class="tg-yw4l">5</td>
+                    <td class="tg-yw4l"><input type="text"
+                                               th:field="*{activePlayer.fives}" size="3"/></td>
+                    <td class="tg-yw4l update" th:text="*{passivePlayer.fives}" id="fives"></td>
+                </tr>
+                <tr>
+                    <td class="tg-yw4l">6</td>
+                    <td class="tg-yw4l"><input type="text"
+                                               th:field="*{activePlayer.sixes}" size="3"/></td>
+                    <td class="tg-yw4l update" th:text="*{passivePlayer.sixes}" id="sixes"></td>
+                </tr>
+                <tr>
+                    <td class="tg-yw4l" th:text="#{total}"></td>
+                    <td class="tg-yw4l" th:text="*{activePlayer.totalUpper}"></td>
+                    <td class="tg-yw4l update" th:text="*{passivePlayer.totalUpper}" id="totalUpper"></td>
+                </tr>
+                <tr>
+                    <td class="tg-yw4l" th:text="#{bonus}"></td>
+                    <td class="tg-yw4l" th:text="*{activePlayer.bonus}"></td>
+                    <td class="tg-yw4l update" th:text="*{passivePlayer.bonus}" id="bonus"></td>
+                </tr>
+                <tr>
+                    <td class="tg-yw4l" th:text="#{totalUpper}"></td>
+                    <td class="tg-yw4l" th:text="*{activePlayer.totalUpperInclBonus}"></td>
+                    <td class="tg-yw4l update" th:text="*{passivePlayer.totalUpperInclBonus}"
+                        id="totalUpperInclBonus"></td>
+                </tr>
+                <tr>
+                    <td class="tg-yw4l"></td>
+                </tr>
+                <tr>
+                    <td class="tg-yw4l" th:text="#{3OfAKind}"></td>
+                    <td class="tg-yw4l"><input type="text"
+                                               th:field="*{activePlayer.threeOfAKind}" size="3"/></td>
+                    <td class="tg-yw4l update" th:text="*{passivePlayer.threeOfAKind}" id="threeOfAKind"></td>
+                </tr>
+                <tr>
+                    <td class="tg-yw4l" th:text="#{4OfAKind}"></td>
+                    <td class="tg-yw4l"><input type="text"
+                                               th:field="*{activePlayer.fourOfAKind}" size="3"/></td>
+                    <td class="tg-yw4l update" th:text="*{passivePlayer.fourOfAKind}" id="fourOfAKind"></td>
+                </tr>
+                <tr>
+                    <td class="tg-yw4l" th:text="#{fullHouse}"></td>
+                    <td class="tg-yw4l"><input type="text"
+                                               th:field="*{activePlayer.fullHouse}" size="3"/></td>
+                    <td class="tg-yw4l update" th:text="*{passivePlayer.fullHouse}" id="fullHouse"></td>
+                </tr>
+                <tr>
+                    <td class="tg-yw4l" th:text="#{smallStraight}"></td>
+                    <td class="tg-yw4l"><input type="text"
+                                               th:field="*{activePlayer.smallStraight}" size="3"/></td>
+                    <td class="tg-yw4l update" th:text="*{passivePlayer.smallStraight}" id="smallStraight"></td>
+                </tr>
+                <tr>
+                    <td class="tg-yw4l" th:text="#{largeStraight}"></td>
+                    <td class="tg-yw4l"><input type="text"
+                                               th:field="*{activePlayer.largeStraight}" size="3"/></td>
+                    <td class="tg-yw4l update" th:text="*{passivePlayer.largeStraight}" id="largeStraight"></td>
+                </tr>
+                <tr>
+                    <td class="tg-yw4l" th:text="#{yahtzee}"></td>
+                    <td class="tg-yw4l"><input type="text"
+                                               th:field="*{activePlayer.yahtzee}" size="3"/></td>
+                    <td class="tg-yw4l update" th:text="*{passivePlayer.yahtzee}" id="yahtzee"></td>
+                </tr>
+                <tr>
+                    <td class="tg-yw4l" th:text="#{chance}"></td>
+                    <td class="tg-yw4l"><input type="text"
+                                               th:field="*{activePlayer.chance}" size="3"/></td>
+                    <td class="tg-yw4l update" th:text="*{passivePlayer.chance}" id="chance"></td>
+                </tr>
+                <tr>
+                    <td class="tg-yw4l" th:text="#{totalLower}"></td>
+                    <td class="tg-yw4l" th:text="*{activePlayer.totalLower}"></td>
+                    <td class="tg-yw4l update" th:text="*{passivePlayer.totalLower}" id="totalLower"></td>
+                </tr>
+                <tr>
+                    <td class="tg-yw4l" th:text="#{totalUpper}"></td>
+                    <td class="tg-yw4l" th:text="*{activePlayer.totalUpperInclBonus}"></td>
+                    <td class="tg-yw4l update" th:text="*{passivePlayer.totalUpperInclBonus}"
+                        id="totalUpperInclBonus"></td>
+                </tr>
+                <tr>
+                    <td class="tg-yw4l" th:text="#{grandTotal}"></td>
+                    <td class="tg-yw4l" th:text="*{activePlayer.grandTotal}"></td>
+                    <td class="tg-yw4l update" th:text="*{passivePlayer.grandTotal}" id="grandTotal"></td>
+                </tr>
+            </table>
+        </div>
+
+    </form>
+
+</div>
+
+
+<div class="left">
+    <div th:replace="roll :: roll">...</div>
+</div>
+
+
+<script th:inline="javascript">
+
+function getPassivePlayerName(){
+    return [[${match.passivePlayer.playerName}]];
+
+};
+function getActivePlayerName(){
+    return [[${match.activePlayer.playerName}]];
+
+};
+
+
+</script>
+<script>
+  var updateFields = $(".update");
+  var playerName = getPassivePlayerName();
+    var update = function(){
+        updateFields.each(function(element) {
+            var field = this;
+            var path = "value/" + playerName + "/" + this.id;
+            $.get(path, function( data ) {
+                field.innerHTML = data;
+             });
+
+        });
+    }
+update();
+setInterval(update, 3000);
+
+
+
+</script>
+
+<!--<tr th:each="name : *{fieldnames}">-->
+<!--<td class="tg-yw4l" th:text="${name.shortName}"></td>-->
+<!--<td class="tg-yw4l"><input type="text"-->
+<!--th:field="*{activePlayer.${name.longName}}" size="3"/></td>-->
+<!--<td class="tg-yw4l" th:text="*{passivePlayer.${name.longName}}" id="spassiveOnes"></td>-->
+<!--</tr>-->
 </body>
 </html>
