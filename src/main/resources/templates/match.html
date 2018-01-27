@@ -3,7 +3,9 @@
 <head>
     <title>Yahtzee Sheet</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <link rel="stylesheet" type="text/css" href="style.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
 </head>
 <body>
 <script th:inline="javascript">
@@ -26,25 +28,33 @@ window.addEventListener("load", function load(event){
     startUpdate();
 },false);
 
+
+
 </script>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
-<script  th:inline="javascript" th:src="@{/js/scripts.js}" />
-
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"/>
+<script th:inline="javascript" th:src="@{/js/scripts.js}"/>
+<form action="#" th:action="@{/match}" th:object="${match}"
+      method="get">
+    <input type="hidden" th:value="${match.activePlayer.playerName}" name="player"/>
+    <input type="submit" th:value="#{refresh}" class="btn btn-primary form-control"/>
+</form>
+<p></p>
+<div class="left" id="rollDiv">
+    <div th:replace="roll :: roll">...</div>
+</div>
 <div class="left">
-    <form action="#" th:action="@{/match}" th:object="${match}"
-          method="get">
-        <input type="hidden" th:value="${match.activePlayer.playerName}" name="player"/>
-        <input type="submit" value="Refresh"/>
-    </form>
+
     <form action="#" th:action="@{/match(player=${match.activePlayer.playerName})}" th:object="${match}"
           method="post">
-        <p>
-            <input type="submit" th:value="#{submit}"/>
-            <button type="submit" formaction="/reset">Reset</button>
-        </p>
-        <div id="board">
-            <table class="tg" style="table-layout: fixed; width: 164px">
+
+        <div class="btn-group" role="group">
+            <input type="submit" th:value="#{submit}" class="btn btn-primary"/>
+            <button type="submit" formaction="/reset" class="btn btn-primary">Reset</button>
+        </div>
+        <div id="board" class="well well-sm">
+            <table class="tg table-bordered" style="table-layout: fixed; width: 164px">
                 <colgroup>
                     <col style="width: 109.2px"/>
                     <col style="width: 59.2px"/>
@@ -59,37 +69,37 @@ window.addEventListener("load", function load(event){
                 </tr>
                 <tr>
                     <td class="tg-yw4l">1</td>
-                    <td class="tg-yw4l"><input type="text"
+                    <td class="tg-yw4l"><input type="number"
                                                th:field="*{activePlayer.ones}" size="3"/></td>
                     <td class="tg-yw4l update" th:text="*{passivePlayer.ones}" id="ones"></td>
                 </tr>
                 <tr>
                     <td class="tg-yw4l">2</td>
-                    <td class="tg-yw4l"><input type="text"
+                    <td class="tg-yw4l"><input type="number"
                                                th:field="*{activePlayer.twos}" size="3"/></td>
                     <td class="tg-yw4l update" th:text="*{passivePlayer.twos}" id="twos"></td>
                 </tr>
                 <tr>
                     <td class="tg-yw4l">3</td>
-                    <td class="tg-yw4l"><input type="text"
+                    <td class="tg-yw4l"><input type="number"
                                                th:field="*{activePlayer.threes}" size="3"/></td>
                     <td class="tg-yw4l update" th:text="*{passivePlayer.threes}" id="threes"></td>
                 </tr>
                 <tr>
                     <td class="tg-yw4l">4</td>
-                    <td class="tg-yw4l"><input type="text"
+                    <td class="tg-yw4l"><input type="number"
                                                th:field="*{activePlayer.fours}" size="3"/></td>
                     <td class="tg-yw4l update" th:text="*{passivePlayer.fours}" id="fours"></td>
                 </tr>
                 <tr>
                     <td class="tg-yw4l">5</td>
-                    <td class="tg-yw4l"><input type="text"
+                    <td class="tg-yw4l"><input type="number"
                                                th:field="*{activePlayer.fives}" size="3"/></td>
                     <td class="tg-yw4l update" th:text="*{passivePlayer.fives}" id="fives"></td>
                 </tr>
                 <tr>
                     <td class="tg-yw4l">6</td>
-                    <td class="tg-yw4l"><input type="text"
+                    <td class="tg-yw4l"><input type="number"
                                                th:field="*{activePlayer.sixes}" size="3"/></td>
                     <td class="tg-yw4l update" th:text="*{passivePlayer.sixes}" id="sixes"></td>
                 </tr>
@@ -114,43 +124,43 @@ window.addEventListener("load", function load(event){
                 </tr>
                 <tr>
                     <td class="tg-yw4l" th:text="#{3OfAKind}"></td>
-                    <td class="tg-yw4l"><input type="text"
-                                               th:field="*{activePlayer.threeOfAKind}" size="3"/></td>
+                    <td class="tg-yw4l"><input type="number"
+                                               th:field="*{activePlayer.threeOfAKind}" size="2"/></td>
                     <td class="tg-yw4l update" th:text="*{passivePlayer.threeOfAKind}" id="threeOfAKind"></td>
                 </tr>
                 <tr>
                     <td class="tg-yw4l" th:text="#{4OfAKind}"></td>
-                    <td class="tg-yw4l"><input type="text"
-                                               th:field="*{activePlayer.fourOfAKind}" size="3"/></td>
+                    <td class="tg-yw4l"><input type="number"
+                                               th:field="*{activePlayer.fourOfAKind}" size="2"/></td>
                     <td class="tg-yw4l update" th:text="*{passivePlayer.fourOfAKind}" id="fourOfAKind"></td>
                 </tr>
                 <tr>
                     <td class="tg-yw4l" th:text="#{fullHouse}"></td>
-                    <td class="tg-yw4l"><input type="text"
-                                               th:field="*{activePlayer.fullHouse}" size="3"/></td>
+                    <td class="tg-yw4l"><input type="number"
+                                               th:field="*{activePlayer.fullHouse}" size="2"/></td>
                     <td class="tg-yw4l update" th:text="*{passivePlayer.fullHouse}" id="fullHouse"></td>
                 </tr>
                 <tr>
                     <td class="tg-yw4l" th:text="#{smallStraight}"></td>
-                    <td class="tg-yw4l"><input type="text"
+                    <td class="tg-yw4l"><input type="number"
                                                th:field="*{activePlayer.smallStraight}" size="3"/></td>
                     <td class="tg-yw4l update" th:text="*{passivePlayer.smallStraight}" id="smallStraight"></td>
                 </tr>
                 <tr>
                     <td class="tg-yw4l" th:text="#{largeStraight}"></td>
-                    <td class="tg-yw4l"><input type="text"
+                    <td class="tg-yw4l"><input type="number"
                                                th:field="*{activePlayer.largeStraight}" size="3"/></td>
                     <td class="tg-yw4l update" th:text="*{passivePlayer.largeStraight}" id="largeStraight"></td>
                 </tr>
                 <tr>
                     <td class="tg-yw4l" th:text="#{yahtzee}"></td>
-                    <td class="tg-yw4l"><input type="text"
+                    <td class="tg-yw4l"><input type="number"
                                                th:field="*{activePlayer.yahtzee}" size="3"/></td>
                     <td class="tg-yw4l update" th:text="*{passivePlayer.yahtzee}" id="yahtzee"></td>
                 </tr>
                 <tr>
                     <td class="tg-yw4l" th:text="#{chance}"></td>
-                    <td class="tg-yw4l"><input type="text"
+                    <td class="tg-yw4l"><input type="number"
                                                th:field="*{activePlayer.chance}" size="3"/></td>
                     <td class="tg-yw4l update" th:text="*{passivePlayer.chance}" id="chance"></td>
                 </tr>
@@ -176,13 +186,6 @@ window.addEventListener("load", function load(event){
     </form>
 
 </div>
-
-
-<div class="left" id="rollDiv">
-    <div th:replace="roll :: roll" >...</div>
-</div>
-
-
 
 
 <!--<tr th:each="name : *{fieldnames}">-->
