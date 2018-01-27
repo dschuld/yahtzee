@@ -30,15 +30,10 @@ public class MatchController {
 
     private Map<String, Scorecard> scorecards = new HashMap<>();
 
-    private Scorecard davidCard;
-    private Scorecard melCard;
-
     public MatchController() {
         match = new Match("David", "Melanie");
-        scorecards.put("David", match.getActivePlayer());
-        scorecards.put("Melanie", match.getPassivePlayer());
-        davidCard = new Scorecard(match.getActivePlayer());
-        melCard = new Scorecard(match.getPassivePlayer());
+        scorecards.put(match.getActivePlayer().getPlayerName(), match.getActivePlayer());
+        scorecards.put(match.getPassivePlayer().getPlayerName(), match.getPassivePlayer());
     }
 
     @ModelAttribute("roll")
@@ -65,9 +60,9 @@ public class MatchController {
                                      BindingResult bindingResult) {
         cloneScorecards(player, match);
         if (player.toLowerCase().equals("david")) {
-            this.davidCard = new Scorecard(match.getActivePlayer());
+            this.scorecards.put("David", new Scorecard(match.getActivePlayer()));
         } else {
-            this.melCard = new Scorecard(match.getActivePlayer());
+            this.scorecards.put("Melanie", new Scorecard(match.getActivePlayer()));
         }
         cloneScorecards(player);
 
@@ -78,11 +73,11 @@ public class MatchController {
 
     private void cloneScorecards(String player) {
         if (player.toLowerCase().equals("david")) {
-            match.setActivePlayer(new Scorecard(this.davidCard));
-            match.setPassivePlayer(new Scorecard(this.melCard));
+            match.setActivePlayer(new Scorecard(this.scorecards.get("David")));
+            match.setPassivePlayer(new Scorecard(this.scorecards.get("Melanie")));
         } else {
-            match.setActivePlayer(new Scorecard(this.melCard));
-            match.setPassivePlayer(new Scorecard(this.davidCard));
+            match.setActivePlayer(new Scorecard(this.scorecards.get("Melanie")));
+            match.setPassivePlayer(new Scorecard(this.scorecards.get("David")));
         }
     }
 
