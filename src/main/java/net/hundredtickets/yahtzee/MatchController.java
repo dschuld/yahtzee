@@ -115,11 +115,12 @@ public class MatchController {
     }
 
     @GetMapping("/roll")
-    public String getRoll(@ModelAttribute("roll") Roll roll, BindingResult bindingResult) {
+    @ResponseBody
+    public Roll getRoll(@ModelAttribute("roll") Roll roll, BindingResult bindingResult) {
 
         roundService.fetchCurrentValues(roll);
 
-        return "match";
+        return roll;
     }
 
     @GetMapping("/value/{player}/{field}")

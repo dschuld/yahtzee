@@ -59,16 +59,11 @@
 					<col style="width: 29.2px" />
 				</colgroup>
 				<tr>
-					<td class="tg-diceval"><input type="text"
-						th:field="*{roll.dice1}" readonly="true" /></td>
-					<td class="tg-diceval"><input type="text"
-						th:field="*{roll.dice2}" readonly="true" /></td>
-					<td class="tg-diceval"><input type="text"
-						th:field="*{roll.dice3}" readonly="true" /></td>
-					<td class="tg-diceval"><input type="text"
-						th:field="*{roll.dice4}" readonly="true" /></td>
-					<td class="tg-diceval"><input type="text"
-						th:field="*{roll.dice5}" readonly="true" /></td>
+					<td class="tg-diceval" th:text="*{roll.dice1}" id="dice1"></td>
+					<td class="tg-diceval" th:text="*{roll.dice2}" id="dice2"></td>
+					<td class="tg-diceval" th:text="*{roll.dice3}" id="dice3"></td>
+					<td class="tg-diceval" th:text="*{roll.dice4}" id="dice4"></td>
+					<td class="tg-diceval" th:text="*{roll.dice5}" id="dice5"></td>
 				</tr>
 				<tr>
 					<td class="tg-yw4l"><input type="checkbox"
@@ -84,7 +79,7 @@
 				</tr>
 
 			</table>
-			<p th:text="#{remainingRolls} +': ' + ${roll.remainingRolls}" />
+			<p th:text="#{remainingRolls} +': ' + ${roll.remainingRolls}"  id="remainingRolls"/>
 			<p>
 				<input type="submit" th:value="#{roll}" />
 			</p>

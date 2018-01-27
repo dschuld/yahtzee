@@ -87,6 +87,7 @@ div.right {
 
 
 
+
 </style>
 
 <div class="left">
@@ -236,8 +237,8 @@ div.right {
 </div>
 
 
-<div class="left">
-    <div th:replace="roll :: roll">...</div>
+<div class="left" id="rollDiv">
+    <div th:replace="roll :: roll" >...</div>
 </div>
 
 
@@ -251,13 +252,18 @@ function getActivePlayerName(){
     return [[${match.activePlayer.playerName}]];
 
 };
+function getRemainingRollsText(){
+    return [[#{remainingRolls}]];
 
+};
 
 </script>
 <script>
   var updateFields = $(".update");
   var playerName = getPassivePlayerName();
     var update = function(){
+
+
         updateFields.each(function(element) {
             var field = this;
             var path = "value/" + playerName + "/" + this.id;
@@ -266,9 +272,20 @@ function getActivePlayerName(){
              });
 
         });
+
+         $.get("roll",  function( data ) {
+            $("#dice1")[0].innerHTML = data.dice1;
+            $("#dice2")[0].innerHTML = data.dice2;
+            $("#dice3")[0].innerHTML = data.dice3;
+            $("#dice4")[0].innerHTML = data.dice4;
+            $("#dice5")[0].innerHTML = data.dice5;
+            $("#remainingRolls")[0].innerHTML = getRemainingRollsText() +': ' +data.remainingRolls;
+         });
+
     }
 update();
 setInterval(update, 3000);
+
 
 
 
