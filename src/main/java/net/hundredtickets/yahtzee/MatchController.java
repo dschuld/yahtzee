@@ -130,8 +130,15 @@ public class MatchController {
 
 
     @PostMapping("/roll")
-    public String postRoll(@ModelAttribute("roll") Roll roll, BindingResult bindingResult) {
+    public String postRoll(String player, @ModelAttribute("roll") Roll roll, BindingResult bindingResult) {
 
+        if (player.toLowerCase().equals("david")) {
+            match.setActivePlayer(new Scorecard(this.davidCard));
+            match.setPassivePlayer(new Scorecard(this.melCard));
+        } else {
+            match.setActivePlayer(new Scorecard(this.melCard));
+            match.setPassivePlayer(new Scorecard(this.davidCard));
+        }
         setDiceValues(roll);
 
         return "match";

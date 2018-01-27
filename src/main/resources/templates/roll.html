@@ -48,7 +48,7 @@
 
 
 	<div th:fragment="roll">
-		<form action="#" th:action="@{/roll}" method="post">
+		<form action="#" th:action="@{/roll(player=${match.activePlayer.playerName})}" method="post">
 
 			<table class="tg" style="table-layout: fixed; width: 164px">
 				<colgroup>

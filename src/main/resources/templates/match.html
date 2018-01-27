@@ -112,10 +112,8 @@ div.right {
 
                 <tr>
                     <td class="tg-yw4l">Name</td>
-                    <td class="tg-yw4l"><input type="text"
-                                               th:field="*{activePlayer.playerName}" size="3"/></td>
-                    <td class="tg-yw4l"><input type="text"
-                                               th:field="*{passivePlayer.playerName}" size="3"/></td>
+                    <td class="tg-yw4l" th:text="*{activePlayer.playerName}"></td>
+                    <td class="tg-yw4l" th:text="*{passivePlayer.playerName}"></td>
                 </tr>
                 <tr>
                     <td class="tg-yw4l">1</td>
