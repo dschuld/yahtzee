@@ -18,7 +18,7 @@ phases:
   post_build:
     commands:
       - echo Build completed on `date`
-      - mvn deploy
+      - mvn package
 artifacts:
   files:
     - target/yahtzee-0.0.1-SNAPSHOT.jar
