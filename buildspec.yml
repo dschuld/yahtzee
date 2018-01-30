@@ -22,3 +22,5 @@ phases:
 artifacts:
   files:
     - target/yahtzee-0.0.1-SNAPSHOT.jar
+    - Dockerfile
+    - Dockerrun.aws.json
