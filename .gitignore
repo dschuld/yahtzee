@@ -22,3 +22,9 @@ nbbuild/
 dist/
 nbdist/
 .nb-gradle/
+
+#Gradle
+.gradletasknamecache
+.gradle/
+build/
+bin/

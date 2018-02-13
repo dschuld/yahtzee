@@ -91,7 +91,7 @@ public class YahtzeeWebTestsNoServer {
 	@Test
 	public void rounds() throws Exception {
 
-		this.mockMvc.perform(post("/roll")).andDo(print()).andExpect(status().isOk())
+		this.mockMvc.perform(post("/roll?player=David")).andDo(print()).andExpect(status().isOk())
 				.andExpect(content().string(containsString("123")));
 
 	}
