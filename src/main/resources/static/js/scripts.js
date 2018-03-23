@@ -1,3 +1,30 @@
+
+bindListeners = function() {
+    var inputFields = $(".input");
+
+    inputFields.click(function (event) {
+        var field = event.target.id.replace("Input","");
+        evaluateRoll(field);
+    })
+
+}
+
+var evaluateRoll = function(field) {
+
+ $.get("roll/evaluate/" + field,  function( data ) {
+            var inputField = $("#" + field + "Input")[0];
+
+            if (inputField.value == "") {
+                inputField.value = data;
+            } else {
+                inputField.value = "";
+            }
+
+         });
+
+
+}
+
 startUpdate = function() {
 
   var updateFields = $(".update");

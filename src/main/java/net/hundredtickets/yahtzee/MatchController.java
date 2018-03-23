@@ -2,6 +2,7 @@ package net.hundredtickets.yahtzee;
 
 import javax.validation.Valid;
 
+import net.hundredtickets.yahtzee.model.Fields;
 import net.hundredtickets.yahtzee.model.Scorecard;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -96,6 +97,16 @@ public class MatchController {
         roundService.fetchCurrentValues(roll);
 
         return roll;
+    }
+
+    @GetMapping("/roll/evaluate/{field}")
+    @ResponseBody
+    public Integer evaluateRollForField(@PathVariable String field) {
+
+        Roll roll = new Roll();
+        roundService.fetchCurrentValues(roll);
+
+        return Fields.getForName(field).evaluate(new Integer[]{roll.getDice1(), roll.getDice2(), roll.getDice3(), roll.getDice4(), roll.getDice5()});
     }
 
     @GetMapping("/value/{player}/{field}")
