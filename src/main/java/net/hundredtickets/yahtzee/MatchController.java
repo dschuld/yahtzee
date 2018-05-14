@@ -32,9 +32,9 @@ public class MatchController {
     private Map<String, Scorecard> scorecards = new HashMap<>();
 
     public MatchController() {
-        match = new Match("David", "Melanie");
-        scorecards.put(match.getActivePlayer().getPlayerName(), match.getActivePlayer());
-        scorecards.put(match.getPassivePlayer().getPlayerName(), match.getPassivePlayer());
+        match = new Match("Player1", "Player2");
+        scorecards.put(match.getActivePlayer().getPlayerId(), match.getActivePlayer());
+        scorecards.put(match.getPassivePlayer().getPlayerId(), match.getPassivePlayer());
     }
 
     @ModelAttribute("roll")
@@ -59,11 +59,11 @@ public class MatchController {
     @PostMapping("/match")
     public String putScorecardPoints(String player, @Valid @ModelAttribute("match") Match match, @ModelAttribute("roll") Roll roll,
                                      BindingResult bindingResult) {
-        cloneScorecards(player, match);
-        if (player.toLowerCase().equals("david")) {
-            this.scorecards.put("David", new Scorecard(match.getActivePlayer()));
+        setActivePlayerScorecard(player, match);
+        if (player.toLowerCase().equals("player1")) {
+            this.scorecards.put("Player1", new Scorecard(match.getActivePlayer()));
         } else {
-            this.scorecards.put("Melanie", new Scorecard(match.getActivePlayer()));
+            this.scorecards.put("Player2", new Scorecard(match.getActivePlayer()));
         }
         cloneScorecards(player);
 
@@ -73,17 +73,17 @@ public class MatchController {
     }
 
     private void cloneScorecards(String player) {
-        if (player.toLowerCase().equals("david")) {
-            match.setActivePlayer(new Scorecard(this.scorecards.get("David")));
-            match.setPassivePlayer(new Scorecard(this.scorecards.get("Melanie")));
+        if (player.toLowerCase().equals("player1")) {
+            match.setActivePlayer(new Scorecard(this.scorecards.get("Player1")));
+            match.setPassivePlayer(new Scorecard(this.scorecards.get("Player2")));
         } else {
-            match.setActivePlayer(new Scorecard(this.scorecards.get("Melanie")));
-            match.setPassivePlayer(new Scorecard(this.scorecards.get("David")));
+            match.setActivePlayer(new Scorecard(this.scorecards.get("Player2")));
+            match.setPassivePlayer(new Scorecard(this.scorecards.get("Player1")));
         }
     }
 
-    private void cloneScorecards(String playerName, Match match) {
-        if (!match.getActivePlayer().getPlayerName().toLowerCase().equals(playerName.toLowerCase())) {
+    private void setActivePlayerScorecard(String playerId, Match match) {
+        if (!match.getActivePlayer().getPlayerId().toLowerCase().equals(playerId.toLowerCase())) {
             Scorecard activePlayer = match.getActivePlayer();
             match.setActivePlayer(match.getPassivePlayer());
             match.setPassivePlayer(activePlayer);

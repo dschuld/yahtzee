@@ -39,22 +39,17 @@ public class YahtzeeWebTestsNoServer {
 
 	@Before
 	public void setUp() {
-		when(roundService.rollDice(any(Roll.class))).then(new Answer<Roll>() {
+		when(roundService.rollDice(any(Roll.class))).then((Answer<Roll>) invocation -> {
+            Roll returnRoll = invocation.getArgumentAt(0, Roll.class);
 
-			@Override
-			public Roll answer(InvocationOnMock invocation) throws Throwable {
-				Roll returnRoll = invocation.getArgumentAt(0, Roll.class);
+            returnRoll.setDice1(1);
+            returnRoll.setDice2(1);
+            returnRoll.setDice3(1);
+            returnRoll.setDice4(1);
+            returnRoll.setDice5(123);
 
-				returnRoll.setDice1(1);
-				returnRoll.setDice2(1);
-				returnRoll.setDice3(1);
-				returnRoll.setDice4(1);
-				returnRoll.setDice5(123);
-
-				return returnRoll;
-			}
-
-		});
+            return returnRoll;
+        });
 
 	}
 
@@ -62,13 +57,13 @@ public class YahtzeeWebTestsNoServer {
 	public void getContainsHardcodedValues() throws Exception {
 		MultiValueMap<String, String> map = new LinkedMultiValueMap<String, String>();
 
-		map = new LinkedMultiValueMap<String, String>();
+		map = new LinkedMultiValueMap<>();
 		map.add("Accept-Language", "de-DE,de");
 		map.add("RequestId", "asd");
 
 		map.add("player", "David");
-		map.add("passivePlayer.name", "David");
-		map.add("activePlayer.name", "Melanie");
+		map.add("passivePlayer.name", "Player1");
+		map.add("activePlayer.name", "Player2");
 		map.add("activePlayer.ones", "3");
 		map.add("activePlayer.twos", "6");
 		map.add("activePlayer.threes", "9");
@@ -100,7 +95,7 @@ public class YahtzeeWebTestsNoServer {
 	public void rightName() throws Exception {
 
 		this.mockMvc.perform(get("/index.html")).andDo(print()).andExpect(status().isOk())
-				.andExpect(content().string(containsString("Melanie")));
+				.andExpect(content().string(containsString("Player2")));
 
 	}
 

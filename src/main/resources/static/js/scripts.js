@@ -28,13 +28,13 @@ var evaluateRoll = function(field) {
 startUpdate = function() {
 
   var updateFields = $(".update");
-  var playerName = getPassivePlayerName();
+  var playerId = getPassivePlayerName();
     var update = function(){
 
 
         updateFields.each(function(element) {
             var field = this;
-            var path = "value/" + playerName + "/" + this.id;
+            var path = "value/" + playerId + "/" + this.id;
             $.get(path, function( data ) {
                 field.innerHTML = data;
              });

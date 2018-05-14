@@ -17,8 +17,8 @@ public class ScorecardValidator implements Validator {
 		// if (target.getClass().equals(Match.class)) {
 		// return;
 		// }
-		// ValidationUtils.rejectIfEmpty(errors, "playerName",
-		// "playerName.empty");
+		// ValidationUtils.rejectIfEmpty(errors, "playerId",
+		// "playerId.empty");
 
 	}
 

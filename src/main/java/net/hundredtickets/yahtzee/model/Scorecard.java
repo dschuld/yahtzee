@@ -4,7 +4,6 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
-import java.lang.reflect.Field;
 
 /**
  * A Yahtzee Scorecard, containing a field for each scorecard entry and
@@ -19,6 +18,8 @@ public class Scorecard {
     private Long id;
 
     private String playerName;
+
+    private String playerId;
 
     private long matchId;
 
@@ -60,12 +61,13 @@ public class Scorecard {
 
     }
 
-    public Scorecard(String playerName) {
-        this.playerName = playerName;
+    public Scorecard(String playerId) {
+        this.playerId = playerId;
     }
 
     public Scorecard(Scorecard card) {
         this.playerName = card.playerName;
+        this.playerId = card.playerId;
         this.matchId = card.matchId;
         this.ones = card.ones;
         this.twos = card.twos;
@@ -96,6 +98,14 @@ public class Scorecard {
 
     public void setPlayerName(String playerName) {
         this.playerName = playerName;
+    }
+
+    public String getPlayerId() {
+        return playerId;
+    }
+
+    public void setPlayerId(String playerId) {
+        this.playerId = playerId;
     }
 
     public long getMatchId() {

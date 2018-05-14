@@ -46,8 +46,8 @@ public class YahtzeeWebTests {
 		map.add("Accept-Language", "de-DE,de");
         map.add("RequestId", "asd");
         map.add("player", "David");
-        map.add("passivePlayer.name", "David");
-        map.add("activePlayer.name", "Melanie");
+        map.add("passivePlayer.name", "Player1");
+        map.add("activePlayer.name", "Player2");
         map.add("activePlayer.ones", "3");
         map.add("activePlayer.twos", "6");
         map.add("activePlayer.threes", "9");
@@ -78,7 +78,7 @@ public class YahtzeeWebTests {
 		// and does not contain the german word "Kniffel" as the default locale
 		// is en-US
 		assertThat(this.restTemplate.postForObject("http://localhost:" + port + "/match", map, String.class))
-				.contains("David").contains("98").doesNotContain("Kniffel");
+				.contains("Player1").contains("98").doesNotContain("Kniffel");
 	}
 
 	@Test

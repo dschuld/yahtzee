@@ -13,11 +13,11 @@
 <script th:inline="javascript">
 
 function getPassivePlayerName(){
-    return [[${match.passivePlayer.playerName}]];
+    return [[${match.passivePlayer.playerId}]];
 
 };
 function getActivePlayerName(){
-    return [[${match.activePlayer.playerName}]];
+    return [[${match.activePlayer.playerId}]];
 
 };
 function getRemainingRollsText(){
@@ -43,7 +43,7 @@ window.addEventListener("load", function load(event){
 <script th:inline="javascript" th:src="@{/js/scripts.js}"/>
 <form action="#" th:action="@{/match}" th:object="${match}"
       method="get">
-    <input type="hidden" th:value="${match.activePlayer.playerName}" name="player"/>
+    <input type="hidden" th:value="${match.activePlayer.playerId}" name="player"/>
     <input type="submit" th:value="#{refresh}" class="btn btn-primary form-control"/>
 </form>
 <p></p>
@@ -52,7 +52,7 @@ window.addEventListener("load", function load(event){
 </div>
 <div class="left">
 
-    <form action="#" th:action="@{/match(player=${match.activePlayer.playerName})}" th:object="${match}"
+    <form action="#" th:action="@{/match(player=${match.activePlayer.playerId})}" th:object="${match}"
           method="post">
 
         <div class="btn-group" role="group">
@@ -70,8 +70,8 @@ window.addEventListener("load", function load(event){
 
                 <tr>
                     <td class="tg-yw4l">Name</td>
-                    <td class="tg-yw4l" th:text="*{activePlayer.playerName}"></td>
-                    <td class="tg-yw4l" th:text="*{passivePlayer.playerName}"></td>
+                    <td class="tg-yw4l" th:text="*{activePlayer.playerId}"></td>
+                    <td class="tg-yw4l" th:text="*{passivePlayer.playerId}"></td>
                 </tr>
                 <tr>
                     <td class="tg-yw4l">1</td>
