@@ -22,11 +22,11 @@ public class Match {
 
 	public static final Fields[] fieldnames = Fields.values();
 
-	public Match(String activePlayerName, String passivePlayerName) {
+	public Match(String activePlayerId, String passivePlayerId) {
 		this.playerIdToName = new HashMap<>();
 
-		activePlayer = new Scorecard(activePlayerName);
-		passivePlayer = new Scorecard(passivePlayerName);
+		activePlayer = new Scorecard(activePlayerId);
+		passivePlayer = new Scorecard(passivePlayerId);
 	}
 
 	public Scorecard getActivePlayer() {
@@ -56,5 +56,19 @@ public class Match {
         } else {
 	        return passivePlayer;
         }
+    }
+
+    //TODO extend for more than 2 players
+    public String addPlayer(String player) {
+	    if (activePlayer.getPlayerName() == null || activePlayer.getPlayerName().isEmpty()) {
+	        activePlayer.setPlayerName(player);
+	        return activePlayer.getPlayerId();
+        } else if (passivePlayer.getPlayerName() == null || passivePlayer.getPlayerName().isEmpty()) {
+            passivePlayer.setPlayerName(player);
+            return passivePlayer.getPlayerId();
+        } else {
+	        throw new IllegalArgumentException("Too many players registered!");
+        }
+
     }
 }

@@ -47,6 +47,19 @@ public class MatchController {
         return match;
     }
 
+
+    @GetMapping("/start")
+    public String startMatch(String player, @Valid @ModelAttribute("match") Match match, @ModelAttribute("roll") Roll round,
+                             BindingResult bindingResult) {
+
+        String playerId = match.addPlayer(player);
+        this.scorecards.get(playerId).setPlayerName(player);
+        cloneScorecards(playerId);
+
+        roundService.fetchCurrentValues(round);
+        return "match";
+    }
+
     @GetMapping("/match")
     public String getScorecard(String player, @Valid @ModelAttribute("match") Match match, @ModelAttribute("roll") Roll round,
                                BindingResult bindingResult) {

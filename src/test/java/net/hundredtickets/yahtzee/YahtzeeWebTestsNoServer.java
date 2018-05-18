@@ -95,7 +95,7 @@ public class YahtzeeWebTestsNoServer {
 	public void rightName() throws Exception {
 
 		this.mockMvc.perform(get("/index.html")).andDo(print()).andExpect(status().isOk())
-				.andExpect(content().string(containsString("Player2")));
+				.andExpect(content().string(containsString("Player")));
 
 	}
 

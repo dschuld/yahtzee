@@ -24,6 +24,7 @@ public enum Fields {
         return dice -> {
 
             List<Integer> integers = Arrays.asList(dice);
+            integers = integers.stream().distinct().collect(Collectors.toList());
             Collections.sort(integers);
 
             if ((Collections.indexOfSubList(integers, Arrays.asList(1, 2, 3, 4)) > -1)

@@ -56,6 +56,7 @@ public class FieldsTest {
         assertEquals(0, Fields.SMALL_STRAIGHT.evaluate(new Integer[]{2, 1, 5, 5, 5}));
         assertEquals(0, Fields.SMALL_STRAIGHT.evaluate(new Integer[]{6, 5, 4, 2, 2}));
         assertEquals(0, Fields.SMALL_STRAIGHT.evaluate(new Integer[]{1, 2, 3, 5, 6}));
+        assertEquals(30, Fields.SMALL_STRAIGHT.evaluate(new Integer[]{2, 3, 3, 4, 5}));
     }
 
     @Test
