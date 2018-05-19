@@ -10,6 +10,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.invocation.InvocationOnMock;
@@ -31,15 +32,15 @@ import org.springframework.util.MultiValueMap;
 @AutoConfigureMockMvc
 public class YahtzeeWebTestsNoServer {
 
-	@Autowired
-	private MockMvc mockMvc;
+    @Autowired
+    private MockMvc mockMvc;
 
-	@MockBean
-	private RoundService roundService;
+    @MockBean
+    private RoundService roundService;
 
-	@Before
-	public void setUp() {
-		when(roundService.rollDice(any(Roll.class))).then((Answer<Roll>) invocation -> {
+    @Before
+    public void setUp() {
+        when(roundService.rollDice(any(Roll.class))).then((Answer<Roll>) invocation -> {
             Roll returnRoll = invocation.getArgumentAt(0, Roll.class);
 
             returnRoll.setDice1(1);
@@ -51,52 +52,72 @@ public class YahtzeeWebTestsNoServer {
             return returnRoll;
         });
 
-	}
+    }
 
-	@Test
-	public void getContainsHardcodedValues() throws Exception {
-		MultiValueMap<String, String> map = new LinkedMultiValueMap<String, String>();
+    @Test
+    public void getContainsHardcodedValues() throws Exception {
+        MultiValueMap<String, String> map = new LinkedMultiValueMap<String, String>();
 
-		map = new LinkedMultiValueMap<>();
-		map.add("Accept-Language", "de-DE,de");
-		map.add("RequestId", "asd");
+        map = new LinkedMultiValueMap<>();
+        map.add("Accept-Language", "de-DE,de");
+        map.add("RequestId", "asd");
 
-		map.add("player", "David");
-		map.add("passivePlayer.name", "Player1");
-		map.add("activePlayer.name", "Player2");
-		map.add("activePlayer.ones", "3");
-		map.add("activePlayer.twos", "6");
-		map.add("activePlayer.threes", "9");
-		map.add("activePlayer.fours", "12");
-		map.add("activePlayer.fives", "15");
-		map.add("activePlayer.sixes", "18");
-		this.mockMvc.perform(get("/match").params(map)).andDo(print()).andExpect(status().isOk())
-				.andExpect(content().string(containsString("Large Straight")));
-	}
+        map.add("player", "Player1");
+        map.add("passivePlayer.name", "Player1");
+        map.add("activePlayer.name", "Player2");
+        map.add("activePlayer.ones", "3");
+        map.add("activePlayer.twos", "6");
+        map.add("activePlayer.threes", "9");
+        map.add("activePlayer.fours", "12");
+        map.add("activePlayer.fives", "15");
+        map.add("activePlayer.sixes", "18");
+        this.mockMvc.perform(get("/match").params(map)).andDo(print()).andExpect(status().isOk())
+                .andExpect(content().string(containsString("Large Straight")));
+    }
 
-	@Test
-	public void scorecardValidation() throws Exception {
+    @Test
+    public void scorecardValidation() throws Exception {
 
-		// Test the validation by setting a field to an invalid value and
-		// testing for a 4xx client error
-		this.mockMvc.perform(post("/match").param("activePlayer.fours", "30")).andDo(print())
-				.andExpect(status().is4xxClientError());
-	}
+        // Test the validation by setting a field to an invalid value and
+        // testing for a 4xx client error
+        this.mockMvc.perform(post("/match").param("activePlayer.fours", "30")).andDo(print())
+                .andExpect(status().is4xxClientError());
+    }
 
-	@Test
-	public void rounds() throws Exception {
+    @Test
+    public void rounds() throws Exception {
 
-		this.mockMvc.perform(post("/roll?player=David")).andDo(print()).andExpect(status().isOk())
-				.andExpect(content().string(containsString("123")));
+        this.mockMvc.perform(post("/roll?player=Player1")).andDo(print()).andExpect(status().isOk())
+                .andExpect(content().string(containsString("123")));
 
-	}
+    }
 
-	@Test
-	public void rightName() throws Exception {
+    @Test
+    public void start() throws Exception {
 
-		this.mockMvc.perform(get("/index.html")).andDo(print()).andExpect(status().isOk())
-				.andExpect(content().string(containsString("Player")));
+        this.mockMvc.perform(get("/start?player=Player1")).andDo(print()).andExpect(status().isOk());
+        this.mockMvc.perform(get("/start?player=Player2")).andDo(print()).andExpect(status().isOk());
+        this.mockMvc.perform(get("/start?player=Player2")).andDo(print()).andExpect(status().isOk());
 
-	}
+    }
+
+
+    @Test
+    @Ignore
+    public void startWithTooManyPlayers() throws Exception {
+
+        this.mockMvc.perform(get("/start?player=Player1")).andDo(print()).andExpect(status().isOk());
+        this.mockMvc.perform(get("/start?player=Player2")).andDo(print()).andExpect(status().isOk());
+        this.mockMvc.perform(get("/start?player=Player3")).andDo(print()).andExpect(status().is4xxClientError());
+
+    }
+
+    @Test
+    public void rightName() throws Exception {
+
+        this.mockMvc.perform(get("/index.html")).andDo(print()).andExpect(status().isOk())
+                .andExpect(content().string(containsString("Player")));
+
+    }
 
 }

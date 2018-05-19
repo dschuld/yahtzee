@@ -60,10 +60,10 @@ public class Match {
 
     //TODO extend for more than 2 players
     public String addPlayer(String player) {
-	    if (activePlayer.getPlayerName() == null || activePlayer.getPlayerName().isEmpty()) {
+	    if (activePlayer.getPlayerName() == null || activePlayer.getPlayerName().isEmpty() || activePlayer.getPlayerName().equals(player)) {
 	        activePlayer.setPlayerName(player);
 	        return activePlayer.getPlayerId();
-        } else if (passivePlayer.getPlayerName() == null || passivePlayer.getPlayerName().isEmpty()) {
+        } else if (passivePlayer.getPlayerName() == null || passivePlayer.getPlayerName().isEmpty() || passivePlayer.getPlayerName().equals(player)) {
             passivePlayer.setPlayerName(player);
             return passivePlayer.getPlayerId();
         } else {
