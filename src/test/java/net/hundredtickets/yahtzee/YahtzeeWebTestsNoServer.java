@@ -10,7 +10,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.invocation.InvocationOnMock;
@@ -103,7 +102,6 @@ public class YahtzeeWebTestsNoServer {
 
 
     @Test
-    @Ignore
     public void startWithTooManyPlayers() throws Exception {
 
         this.mockMvc.perform(get("/start?player=Player1")).andDo(print()).andExpect(status().isOk());

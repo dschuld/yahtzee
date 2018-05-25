@@ -103,30 +103,7 @@ public class MatchController {
         }
     }
 
-    @GetMapping("/roll")
-    @ResponseBody
-    public Roll getRoll(@ModelAttribute("roll") Roll roll, BindingResult bindingResult) {
 
-        roundService.fetchCurrentValues(roll);
-
-        return roll;
-    }
-
-    @GetMapping("/roll/evaluate/{field}")
-    @ResponseBody
-    public Integer evaluateRollForField(@PathVariable String field) {
-
-        Roll roll = new Roll();
-        roundService.fetchCurrentValues(roll);
-
-        return Fields.getForName(field).evaluate(new Integer[]{roll.getDice1(), roll.getDice2(), roll.getDice3(), roll.getDice4(), roll.getDice5()});
-    }
-
-    @GetMapping("/value/{player}/{field}")
-    @ResponseBody
-    public Integer getPlayerValue(@PathVariable String player, @PathVariable String field) {
-        return match.getScorecard(player).get(field);
-    }
 
 
     @PostMapping("/roll")
@@ -156,6 +133,12 @@ public class MatchController {
             roll.setRemainingRolls(0);
             return;
         }
+    }
+
+    @GetMapping("/value/{player}/{field}")
+    @ResponseBody
+    public Integer getPlayerValue(@PathVariable String player, @PathVariable String field) {
+        return match.getScorecard(player).get(field);
     }
 
 }
