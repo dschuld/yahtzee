@@ -1,37 +1,32 @@
 package net.hundredtickets.yahtzee;
 
-import javax.validation.Valid;
-
-import net.hundredtickets.yahtzee.model.Fields;
-import net.hundredtickets.yahtzee.model.Scorecard;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.*;
-
 import net.hundredtickets.yahtzee.model.Match;
 import net.hundredtickets.yahtzee.model.Roll;
+import net.hundredtickets.yahtzee.model.Scorecard;
 import net.hundredtickets.yahtzee.rounds.NoRollsLeftException;
 import net.hundredtickets.yahtzee.service.RoundService;
 import net.hundredtickets.yahtzee.service.ScorecardService;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.HashMap;
 import java.util.Map;
 
 @Controller
 public class MatchController {
 
-    @Autowired
     private RoundService roundService;
 
-    @Autowired
     private ScorecardService scorecardService;
 
     private Match match;
 
     private Map<String, Scorecard> scorecards = new HashMap<>();
 
-    public MatchController() {
+    public MatchController(RoundService roundService, ScorecardService scorecardService) {
+        this.scorecardService = scorecardService;
+        this.roundService = roundService;
         match = new Match("Player1", "Player2");
         scorecards.put(match.getActivePlayer().getPlayerId(), match.getActivePlayer());
         scorecards.put(match.getPassivePlayer().getPlayerId(), match.getPassivePlayer());
@@ -49,8 +44,7 @@ public class MatchController {
 
 
     @GetMapping("/start")
-    public String startMatch(String player, @Valid @ModelAttribute("match") Match match, @ModelAttribute("roll") Roll round,
-                             BindingResult bindingResult) {
+    public String startMatch(String player, @Valid @ModelAttribute("match") Match match, @ModelAttribute("roll") Roll round) {
 
         String playerId = match.addPlayer(player);
         this.scorecards.get(playerId).setPlayerName(player);
@@ -61,8 +55,7 @@ public class MatchController {
     }
 
     @GetMapping("/match")
-    public String getScorecard(String player, @Valid @ModelAttribute("match") Match match, @ModelAttribute("roll") Roll round,
-                               BindingResult bindingResult) {
+    public String getScorecard(String player, @Valid @ModelAttribute("match") Match match, @ModelAttribute("roll") Roll round) {
 
         cloneScorecards(player);
         roundService.fetchCurrentValues(round);
@@ -70,8 +63,7 @@ public class MatchController {
     }
 
     @PostMapping("/match")
-    public String putScorecardPoints(String player, @Valid @ModelAttribute("match") Match match, @ModelAttribute("roll") Roll roll,
-                                     BindingResult bindingResult) {
+    public String putScorecardPoints(String player, @Valid @ModelAttribute("match") Match match, @ModelAttribute("roll") Roll roll) {
         setActivePlayerScorecard(player, match);
         if (player.toLowerCase().equals("player1")) {
             this.scorecards.put("Player1", new Scorecard(match.getActivePlayer()));
@@ -104,10 +96,8 @@ public class MatchController {
     }
 
 
-
-
     @PostMapping("/roll")
-    public String postRoll(String player, @ModelAttribute("roll") Roll roll, BindingResult bindingResult) {
+    public String postRoll(String player, @ModelAttribute("roll") Roll roll) {
 
         cloneScorecards(player);
         setDiceValues(roll);
@@ -116,8 +106,7 @@ public class MatchController {
     }
 
     @PostMapping("/reset")
-    public String resetMatch(@Valid @ModelAttribute("match") Match match, @ModelAttribute("roll") Roll round,
-                             BindingResult bindingResult) {
+    public String resetMatch(@Valid @ModelAttribute("match") Match match, @ModelAttribute("roll") Roll round) {
 
         match.reset();
         roundService.newRound();

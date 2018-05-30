@@ -10,6 +10,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.invocation.InvocationOnMock;
@@ -91,6 +92,7 @@ public class YahtzeeWebTestsNoServer {
 
     }
 
+
     @Test
     public void start() throws Exception {
 
@@ -102,12 +104,25 @@ public class YahtzeeWebTestsNoServer {
 
 
     @Test
-    public void startWithTooManyPlayers() throws Exception {
+    public void startTooManyPlayers() throws Exception {
 
         this.mockMvc.perform(get("/start?player=Player1")).andDo(print()).andExpect(status().isOk());
         this.mockMvc.perform(get("/start?player=Player2")).andDo(print()).andExpect(status().isOk());
         this.mockMvc.perform(get("/start?player=Player3")).andDo(print()).andExpect(status().is4xxClientError());
 
+    }
+
+
+    @Test
+    public void rollsWithResult() throws Exception {
+        //executes a series of saves and checks the scorecard for the magic number 56, which is the grand total
+        // of the previous rolls
+        this.mockMvc.perform(get("/start?player=Player1")).andDo(print()).andExpect(status().isOk());
+        this.mockMvc.perform(post("/match?player=Player1&activePlayer.ones=3")).andDo(print()).andExpect(status().isOk());
+        this.mockMvc.perform(post("/match?player=Player1&activePlayer.chance=13")).andDo(print()).andExpect(status().isOk());
+        this.mockMvc.perform(post("/match?player=Player1&activePlayer.largeStraight=40")).andDo(print()).andExpect(status().isOk());
+        this.mockMvc.perform(get("/match?player=Player1")).andDo(print()).andExpect(status().isOk())
+                .andExpect(content().string(containsString("56")));
     }
 
     @Test
@@ -116,6 +131,17 @@ public class YahtzeeWebTestsNoServer {
         this.mockMvc.perform(get("/index.html")).andDo(print()).andExpect(status().isOk())
                 .andExpect(content().string(containsString("Player")));
 
+    }
+
+    @Test
+    @Ignore
+    public void additionalYahtzee() throws Exception {
+        this.mockMvc.perform(get("/start?player=Player1")).andDo(print()).andExpect(status().isOk());
+        this.mockMvc.perform(post("/match?player=Player1&activePlayer.yahtzee=50")).andDo(print()).andExpect(status().isOk());
+        this.mockMvc.perform(post("/match?player=Player1&activePlayer.ones=5")).andDo(print()).andExpect(status().isOk());
+        this.mockMvc.perform(post("/match?player=Player1&activePlayer.fives=25")).andDo(print()).andExpect(status().isOk());
+        this.mockMvc.perform(get("/match?player=Player1")).andDo(print()).andExpect(status().isOk())
+                .andExpect(content().string(containsString("180")));
     }
 
 }

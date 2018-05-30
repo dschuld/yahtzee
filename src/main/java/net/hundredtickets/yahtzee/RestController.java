@@ -4,22 +4,23 @@ package net.hundredtickets.yahtzee;
 import net.hundredtickets.yahtzee.model.Fields;
 import net.hundredtickets.yahtzee.model.Roll;
 import net.hundredtickets.yahtzee.service.RoundService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
+@org.springframework.web.bind.annotation.RestController
 public class RestController {
 
-    @Autowired
     private RoundService roundService;
 
+    public RestController(RoundService roundService) {
+        this.roundService = roundService;
+    }
+
     @GetMapping("/roll")
-    @ResponseBody
     public Roll getRoll(@ModelAttribute("roll") Roll roll, BindingResult bindingResult) {
 
         roundService.fetchCurrentValues(roll);
@@ -28,7 +29,6 @@ public class RestController {
     }
 
     @GetMapping("/roll/evaluate/{field}")
-    @ResponseBody
     public Integer evaluateRollForField(@PathVariable String field) {
 
         Roll roll = new Roll();

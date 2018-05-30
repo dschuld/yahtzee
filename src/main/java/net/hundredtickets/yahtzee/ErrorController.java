@@ -14,7 +14,10 @@ public class ErrorController implements org.springframework.boot.autoconfigure.w
     public String handleError(HttpServletRequest request) {
         Integer statusCode = (Integer) request.getAttribute("javax.servlet.error.status_code");
         Exception exception = (Exception) request.getAttribute("javax.servlet.error.exception");
-        return exception.getMessage();
+        if (exception != null) {
+            return exception.getMessage();
+        }
+        return "";
     }
 
     @Override

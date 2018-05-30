@@ -36,7 +36,7 @@ startUpdate = function() {
             var field = this;
             var path = "value/" + playerId + "/" + this.id;
             $.get(path, function( data ) {
-                field.innerHTML = data;
+                field.value = data;
              });
 
         });

@@ -12,26 +12,26 @@
 <body>
 <script th:inline="javascript">
 
-function getPassivePlayerName(){
-    return [[${match.passivePlayer.playerId}]];
+    function getPassivePlayerName() {
+        return [[${match.passivePlayer.playerId}]];
 
-};
-function getActivePlayerName(){
-    return [[${match.activePlayer.playerId}]];
+    };
 
-};
-function getRemainingRollsText(){
-    return [[#{remainingRolls}]];
+    function getActivePlayerName() {
+        return [[${match.activePlayer.playerId}]];
 
-};
+    };
 
-window.addEventListener("load", function load(event){
-    window.removeEventListener("load", load, false); //remove listener, no longer needed
-    bindListeners();
-    startUpdate();
-},false);
+    function getRemainingRollsText() {
+        return [[#{remainingRolls}]];
 
+    };
 
+    window.addEventListener("load", function load(event) {
+        window.removeEventListener("load", load, false); //remove listener, no longer needed
+        bindListeners();
+        startUpdate();
+    }, false);
 
 
 </script>
@@ -75,39 +75,60 @@ window.addEventListener("load", function load(event){
                 </tr>
                 <tr>
                     <td class="tg-yw4l">1</td>
-                    <td class="tg-yw4l input"><input class="form-control input-sm"  type="number"
-                                                                                           th:field="*{activePlayer.ones}" size="3" id="onesInput"/></td>
-                    <td class="tg-yw4l update" th:text="*{passivePlayer.ones}" id="ones"></td>
+                    <td class="tg-yw4l input"><input class="form-control input-sm" type="number"
+                                                     th:field="*{activePlayer.ones}" size="3" id="onesInput"/></td>
+                    <td class="tg-yw4l">
+                        <input class="update form-control input-sm" type="number" readonly="readonly"
+                               th:field="*{passivePlayer.ones}" size="3" id="ones"/>
+                    </td>
                 </tr>
                 <tr>
                     <td class="tg-yw4l input">2</td>
-                    <td class="tg-yw4l input"><input class="form-control input-sm"  type="number"
+                    <td class="tg-yw4l input"><input class="form-control input-sm" type="number"
                                                      th:field="*{activePlayer.twos}" size="3" id="twosInput"/></td>
-                    <td class="tg-yw4l update" th:text="*{passivePlayer.twos}" id="twos"></td>
+                    <td class="tg-yw4l">
+                        <input class="update form-control input-sm" type="number" readonly="readonly"
+                               th:field="*{passivePlayer.twos}" size="3" id="twos"/>
+
+                    </td>
                 </tr>
                 <tr>
                     <td class="tg-yw4l input">3</td>
-                    <td class="tg-yw4l input"><input class="form-control input-sm"   type="number"
-                                               th:field="*{activePlayer.threes}" size="3" id="threesInput"/></td>
-                    <td class="tg-yw4l update" th:text="*{passivePlayer.threes}" id="threes"></td>
+                    <td class="tg-yw4l input"><input class="form-control input-sm" type="number"
+                                                     th:field="*{activePlayer.threes}" size="3" id="threesInput"/></td>
+                    <td class="tg-yw4l">
+                        <input class="update form-control input-sm" type="number" readonly="readonly"
+                               th:field="*{passivePlayer.threes}" size="3" id="threes"/>
+                    </td>
                 </tr>
                 <tr>
                     <td class="tg-yw4l">4</td>
-                    <td class="tg-yw4l input"><input class="form-control input-sm"   type="number"
-                                               th:field="*{activePlayer.fours}" size="3" id="foursInput"/></td>
-                    <td class="tg-yw4l update" th:text="*{passivePlayer.fours}" id="fours"></td>
+                    <td class="tg-yw4l input"><input class="form-control input-sm" type="number"
+                                                     th:field="*{activePlayer.fours}" size="3" id="foursInput"/></td>
+                    <td class="tg-yw4l">
+                        <input class="update form-control input-sm" type="number" readonly="readonly"
+                               th:field="*{passivePlayer.fours}" size="3" id="fours"/>
+
+                    </td>
                 </tr>
                 <tr>
                     <td class="tg-yw4l">5</td>
-                    <td class="tg-yw4l input"><input class="form-control input-sm"   type="number"
-                                               th:field="*{activePlayer.fives}" size="3" id="fivesInput"/></td>
-                    <td class="tg-yw4l update" th:text="*{passivePlayer.fives}" id="fives"></td>
+                    <td class="tg-yw4l input"><input class="form-control input-sm" type="number"
+                                                     th:field="*{activePlayer.fives}" size="3" id="fivesInput"/></td>
+                    <td class="tg-yw4l">
+                        <input class="update form-control input-sm" type="number" readonly="readonly"
+                               th:field="*{passivePlayer.fives}" size="3" id="fives"/>
+
+                    </td>
                 </tr>
                 <tr>
                     <td class="tg-yw4l">6</td>
-                    <td class="tg-yw4l input"><input class="form-control input-sm"   type="number"
-                                               th:field="*{activePlayer.sixes}" size="3" id="sixesInput"/></td>
-                    <td class="tg-yw4l update" th:text="*{passivePlayer.sixes}" id="sixes"></td>
+                    <td class="tg-yw4l input"><input class="form-control input-sm" type="number"
+                                                     th:field="*{activePlayer.sixes}" size="3" id="sixesInput"/></td>
+                    <td class="tg-yw4l">
+                        <input class="update form-control input-sm" type="number" readonly="readonly"
+                               th:field="*{passivePlayer.sixes}" size="3" id="sixes"/>
+                    </td>
                 </tr>
                 <tr>
                     <td class="tg-yw4l" th:text="#{total}"></td>
@@ -130,49 +151,74 @@ window.addEventListener("load", function load(event){
                 </tr>
                 <tr>
                     <td class="tg-yw4l" th:text="#{3OfAKind}"></td>
-                    <td class="tg-yw4l input"><input class="form-control input-sm"    type="number"
-                                               th:field="*{activePlayer.threeOfAKind}" size="2" id="threeOfAKindInput"/>
+                    <td class="tg-yw4l input"><input class="form-control input-sm" type="number"
+                                                     th:field="*{activePlayer.threeOfAKind}" size="2"
+                                                     id="threeOfAKindInput"/>
                     </td>
-                    <td class="tg-yw4l update" th:text="*{passivePlayer.threeOfAKind}" id="threeOfAKind"></td>
+                    <td class="tg-yw4l">
+                        <input class="update form-control input-sm" type="number" readonly="readonly"
+                               th:field="*{passivePlayer.threeOfAKind}" size="3" id="threeOfAKind"/>
+                    </td>
                 </tr>
                 <tr>
                     <td class="tg-yw4l" th:text="#{4OfAKind}"></td>
-                    <td class="tg-yw4l input"><input class="form-control input-sm"    type="number"
-                                               th:field="*{activePlayer.fourOfAKind}" size="2" id="fourOfAKindInput"/>
+                    <td class="tg-yw4l input"><input class="form-control input-sm" type="number"
+                                                     th:field="*{activePlayer.fourOfAKind}" size="2"
+                                                     id="fourOfAKindInput"/>
                     </td>
-                    <td class="tg-yw4l update" th:text="*{passivePlayer.fourOfAKind}" id="fourOfAKind"></td>
+                    <td class="tg-yw4l">
+                        <input class="update form-control input-sm" type="number" readonly="readonly"
+                               th:field="*{passivePlayer.fourOfAKind}" size="3" id="fourOfAKind"/>
+                    </td>
                 </tr>
                 <tr>
                     <td class="tg-yw4l" th:text="#{fullHouse}"></td>
-                    <td class="tg-yw4l input"><input class="form-control input-sm"    type="number"
-                                               th:field="*{activePlayer.fullHouse}" size="2" id="fullHouseInput"/></td>
-                    <td class="tg-yw4l update" th:text="*{passivePlayer.fullHouse}" id="fullHouse"></td>
+                    <td class="tg-yw4l input"><input class="form-control input-sm" type="number"
+                                                     th:field="*{activePlayer.fullHouse}" size="2" id="fullHouseInput"/>
+                    </td>
+                    <td class="tg-yw4l">
+                        <input class="update form-control input-sm" type="number" readonly="readonly"
+                               th:field="*{passivePlayer.fullHouse}" size="3" id="fullHouse"/>
+                    </td>
                 </tr>
                 <tr>
                     <td class="tg-yw4l" th:text="#{smallStraight}"></td>
-                    <td class="tg-yw4l input"><input class="form-control input-sm"    type="number"
-                                               th:field="*{activePlayer.smallStraight}" size="3"
-                                               id="smallStraightInput"/></td>
-                    <td class="tg-yw4l update" th:text="*{passivePlayer.smallStraight}" id="smallStraight"></td>
+                    <td class="tg-yw4l input"><input class="form-control input-sm" type="number"
+                                                     th:field="*{activePlayer.smallStraight}" size="3"
+                                                     id="smallStraightInput"/></td>
+                    <td class="tg-yw4l">
+                        <input class="update form-control input-sm" type="number" readonly="readonly"
+                               th:field="*{passivePlayer.smallStraight}" size="3" id="smallStraight"/>
+                    </td>
                 </tr>
                 <tr>
                     <td class="tg-yw4l" th:text="#{largeStraight}"></td>
-                    <td class="tg-yw4l input"><input class="form-control input-sm"    type="number"
-                                               th:field="*{activePlayer.largeStraight}" size="3"
-                                               id="largeStraightInput"/></td>
-                    <td class="tg-yw4l update" th:text="*{passivePlayer.largeStraight}" id="largeStraight"></td>
+                    <td class="tg-yw4l input"><input class="form-control input-sm" type="number"
+                                                     th:field="*{activePlayer.largeStraight}" size="3"
+                                                     id="largeStraightInput"/></td>
+                    <td class="tg-yw4l">
+                        <input class="update form-control input-sm" type="number" readonly="readonly"
+                               th:field="*{passivePlayer.largeStraight}" size="3" id="largeStraight"/>
+                    </td>
                 </tr>
                 <tr>
                     <td class="tg-yw4l" th:text="#{yahtzee}"></td>
-                    <td class="tg-yw4l input"><input class="form-control input-sm"    type="number"
-                                               th:field="*{activePlayer.yahtzee}" size="3" id="yahtzeeInput"/></td>
-                    <td class="tg-yw4l update" th:text="*{passivePlayer.yahtzee}" id="yahtzee"></td>
+                    <td class="tg-yw4l input"><input class="form-control input-sm" type="number"
+                                                     th:field="*{activePlayer.yahtzee}" size="3" id="yahtzeeInput"/>
+                    </td>
+                    <td class="tg-yw4l">
+                        <input class="update form-control input-sm" type="number" readonly="readonly"
+                               th:field="*{passivePlayer.yahtzee}" size="3" id="yahtzee"/>
+                    </td>
                 </tr>
                 <tr>
                     <td class="tg-yw4l" th:text="#{chance}"></td>
-                    <td class="tg-yw4l input"><input class="form-control input-sm"        type="number"
-                                               th:field="*{activePlayer.chance}" size="3" id="chanceInput"/></td>
-                    <td class="tg-yw4l update" th:text="*{passivePlayer.chance}" id="chance"></td>
+                    <td class="tg-yw4l input"><input class="form-control input-sm" type="number"
+                                                     th:field="*{activePlayer.chance}" size="3" id="chanceInput"/></td>
+                    <td class="tg-yw4l">
+                        <input class="update form-control input-sm" type="number" readonly="readonly"
+                               th:field="*{passivePlayer.chance}" size="3" id="chance"/>
+                    </td>
                 </tr>
                 <tr>
                     <td class="tg-yw4l" th:text="#{totalLower}"></td>

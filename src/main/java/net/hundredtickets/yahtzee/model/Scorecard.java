@@ -120,104 +120,111 @@ public class Scorecard {
         return ones;
     }
 
-    public void setOnes(Integer ones) {
-        this.ones = ones;
+    public void setOnes(Integer value) {
+        this.ones = value;
+//        checkYahtzee(ones, 5);
     }
+
 
     public Integer getTwos() {
         return twos;
     }
 
-    public void setTwos(Integer twos) {
-        this.twos = twos;
+    public void setTwos(Integer value) {
+        this.twos = value;
+//        checkYahtzee(value, 10);
     }
 
     public Integer getThrees() {
         return threes;
     }
 
-    public void setThrees(Integer threes) {
-        this.threes = threes;
+    public void setThrees(Integer value) {
+        this.threes = value;
+//        checkYahtzee(value, 15);
     }
 
     public Integer getFours() {
         return fours;
     }
 
-    public void setFours(Integer fours) {
-        this.fours = fours;
+    public void setFours(Integer value) {
+        this.fours = value;
+//        checkYahtzee(value, 20);
     }
 
     public Integer getFives() {
         return fives;
     }
 
-    public void setFives(Integer fives) {
-        this.fives = fives;
+    public void setFives(Integer value) {
+        this.fives = value;
+//        checkYahtzee(value, 25);
     }
 
     public Integer getSixes() {
         return sixes;
     }
 
-    public void setSixes(Integer sixes) {
-        this.sixes = sixes;
+    public void setSixes(Integer value) {
+        this.sixes = value;
+//        checkYahtzee(value, 30);
     }
 
     public Integer getThreeOfAKind() {
         return threeOfAKind;
     }
 
-    public void setThreeOfAKind(Integer threeOfAKind) {
-        this.threeOfAKind = threeOfAKind;
+    public void setThreeOfAKind(Integer value) {
+        this.threeOfAKind = value;
     }
 
     public Integer getFourOfAKind() {
         return fourOfAKind;
     }
 
-    public void setFourOfAKind(Integer fourOfAKind) {
-        this.fourOfAKind = fourOfAKind;
+    public void setFourOfAKind(Integer value) {
+        this.fourOfAKind = value;
     }
 
     public Integer getFullHouse() {
         return fullHouse;
     }
 
-    public void setFullHouse(Integer fullHouse) {
-        this.fullHouse = fullHouse;
+    public void setFullHouse(Integer value) {
+        this.fullHouse = value;
     }
 
     public Integer getSmallStraight() {
         return smallStraight;
     }
 
-    public void setSmallStraight(Integer smallStraight) {
-        this.smallStraight = smallStraight;
+    public void setSmallStraight(Integer value) {
+        this.smallStraight = value;
     }
 
     public Integer getLargeStraight() {
         return largeStraight;
     }
 
-    public void setLargeStraight(Integer largeStraight) {
-        this.largeStraight = largeStraight;
+    public void setLargeStraight(Integer value) {
+        this.largeStraight = value;
     }
 
     public Integer getYahtzee() {
         return yahtzee;
     }
 
-    public void setYahtzee(Integer yahtzee) {
-        this.yahtzee = yahtzee;
+    public void setYahtzee(Integer value) {
+        this.yahtzee = value;
     }
 
     public Integer getChance() {
         return chance;
     }
 
-    public void setChance(Integer chance) {
-        this.chance = chance;
+    public void setChance(Integer value) {
+        this.chance = value;
     }
 
     public Integer getTotalUpper() {
@@ -261,5 +268,13 @@ public class Scorecard {
             return null;
         }
         return value;
+    }
+
+
+    //Deactivated for the time being, because yahtzee check for lower section fields is non-trivial
+    private void checkYahtzee(Integer value, int scoreWhenYahtzee) {
+        if (value == scoreWhenYahtzee && yahtzee > 0) {
+     //       this.yahtzee += 50;
+        }
     }
 }

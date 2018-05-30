@@ -37,7 +37,6 @@ public class YahtzeeWebTests {
 	}
 
 	@Test
-    @Ignore
 	public void getScorecard() throws Exception {
 
 		MultiValueMap<String, String> map = new LinkedMultiValueMap<String, String>();
@@ -54,7 +53,7 @@ public class YahtzeeWebTests {
         map.add("activePlayer.fours", "12");
         map.add("activePlayer.fives", "15");
         map.add("activePlayer.sixes", "18");
-		assertThat(this.restTemplate.getForObject("http://localhost:" + port + "/match", String.class, map))
+		assertThat(this.restTemplate.getForObject("http://localhost:" + port + "/match?player=Player1", String.class, map))
 				.contains("Yahtzee");
 
 	}
@@ -63,8 +62,8 @@ public class YahtzeeWebTests {
 	public void postScorecardContent() throws Exception {
 		MultiValueMap<String, String> map = new LinkedMultiValueMap<String, String>();
 		map.add("RequestId", "asd");
-		map.add("player", "David");
-		map.add("passivePlayer.name", "David");
+		map.add("player", "Player1");
+		map.add("activePlayer.name", "David");
 		map.add("activePlayer.ones", "3");
 		map.add("activePlayer.twos", "6");
 		map.add("activePlayer.threes", "9");
