@@ -81,7 +81,7 @@ public class YahtzeeWebTests {
 	}
 
 	@Test
-	public void postScorecardLanguage() throws Exception {
+	public void postScorecardLanguages() throws Exception {
 		MultiValueMap<String, String> headers = new LinkedMultiValueMap<String, String>();
         headers.add("RequestId", "asd");
         headers.add("Accept-Language", "de-DE,de");
